@@ -8,4 +8,3 @@ unnest(results, est_group) %>%
   geom_errorbar(aes(ymin = ci_0.025, ymax = ci_0.975), position = dd)+
   geom_point(position = dd) + ylim(0,1)
 
-cor(results$est_indiv)
