@@ -90,4 +90,4 @@ res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
 
 results <- bind_rows(res_mptinr, res_treebugs) #res_simple, res_trait, res_beta)
 results
-save(results, file = "kuhlmann_sm4.RData")
+save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
