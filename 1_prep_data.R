@@ -71,11 +71,11 @@ MAX_CI_INDIV <- 0.99
 
 
 # for testing
-MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
-TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 2000, n.adapt = 100,
-                   n.burnin = 100, n.thin = 5,
-                   Rhat_max = 5, Neff_min = 5,
-                   n.PPP = 100, nCPU = 8)
+# MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
+# TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 2000, n.adapt = 100,
+#                    n.burnin = 100, n.thin = 5,
+#                    Rhat_max = 5, Neff_min = 5,
+#                    n.PPP = 100, nCPU = 8)
 # res_test <- mpt_treebugs(dataset = DATA_FILE, data, model = EQN_FILE, method = "simple", 
 #                            col_id = COL_ID, col_condition = COL_CONDITION)
 
@@ -90,3 +90,4 @@ res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
 
 results <- bind_rows(res_mptinr, res_treebugs) #res_simple, res_trait, res_beta)
 results
+save(results, file = "kuhlmann_sm4.RData")
