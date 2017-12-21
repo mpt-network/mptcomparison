@@ -1,10 +1,23 @@
 
 #source("1_prep_data.R")
 
+mpt_mptinr <- function(dataset, data, model,
+                       col_id = "id", col_condition = "condition"){
+  
+  ### TODO: replace constants
+  EQN_FILE <- model
+  DATA_FILE <- dataset
+  
+  conditions <- levels(factor(data[[col_condition]]))
+  parameters <- check.mpt(EQN_FILE)$parameters
+  col_freq <- get_eqn_categories(model)
+  data$id <- data[,col_id]
+  data$condition <- data[,col_condition]
+  freq_list <- split(data[,col_freq], f = data[,col_condition])
 
 ######### useful variables
 cols_ci <- paste0("ci_", CI_SIZE)
-conditions <- levels(factor(data[[column_condition]]))
+conditions <- levels(factor(data[[col_condition]]))
 parameters <- check.mpt(EQN_FILE)$parameters
 
 
@@ -14,21 +27,21 @@ clusterExport(cl = cl,
               c("MPTINR_OPTIONS",
                 "EQN_FILE",
                 "data",
-                "column_freq"))
+                "col_freq"), envir = environment())
 
 ################
 ## no pooling ##
 ################
 
-no_pooling <- make_results_row(model = MODEL_NAME,
-                 dataset = DATA_NAME,
+no_pooling <- make_results_row(model = model,
+                 dataset = dataset,
                  pooling = "no",
                  package = "MPTinR",
                  method = "PB",
                  data = data,
                  parameters = parameters)
 
-fit_mptinr <- fit.mpt(data[,column_freq],
+fit_mptinr <- fit.mpt(data[,col_freq],
                       model.filename = EQN_FILE,
                       n.optim = MPTINR_OPTIONS["n.optim"],
                       fit.aggregated = FALSE,
@@ -47,7 +60,7 @@ get_pb_output <- function(i, fit_mptinr) {
     gen.data(fit_mptinr$parameters$individual[,"estimates",i],
              samples = MPTINR_OPTIONS["bootstrap_samples"],
              model.filename = EQN_FILE,
-             data = unlist(data[i,column_freq]))
+             data = unlist(data[i,col_freq]))
   fit.mpt(gen_data,
             model.filename = EQN_FILE,
             fit.aggregated = FALSE,
@@ -99,7 +112,7 @@ est_group <- tmp %>%
   filter(range_ci < MAX_CI_INDIV) %>%
   group_by(condition, parameter) %>%
   summarise(estN = mean(est),
-            se = sd(est) / sqrt(length(est)),  #TODO/CHECK: SE instead of SD
+            se = sd(est) / sqrt(length(est)),
             quant = list(as.data.frame(t(quantile(est, prob = CI_SIZE))))) %>%
   unnest(quant) %>%
   ungroup() %>%
@@ -163,8 +176,8 @@ stopCluster(cl)
 ## complete pooling ##
 ######################
 
-complete_pooling <- make_results_row(model = MODEL_NAME,
-                 dataset = DATA_NAME,
+complete_pooling <- make_results_row(model = model,
+                 dataset = dataset,
                  pooling = "complete",
                  package = "MPTinR",
                  method = "asymptotic",
@@ -176,7 +189,7 @@ complete_pooling$gof_indiv <- list(NULL)
 
 #### fully aggregated:
 
-fit_mptinr_agg <- fit.mpt(colSums(data[,column_freq]),
+fit_mptinr_agg <- fit.mpt(colSums(data[,col_freq]),
                       model.filename = EQN_FILE,
                       n.optim = MPTINR_OPTIONS["n.optim"],
                       show.messages = FALSE)
@@ -198,7 +211,7 @@ complete_pooling$gof_group[[1]][,"type"] <- "G2"
 complete_pooling$gof_group[[1]][,"focus"] <- "mean"
 
 for (i in seq_along(conditions)) {
-  fit_mptinr_tmp <- fit.mpt(colSums(freq_list[[conditions[i]]][,column_freq]),
+  fit_mptinr_tmp <- fit.mpt(colSums(freq_list[[conditions[i]]][,col_freq]),
                       model.filename = EQN_FILE,
                       n.optim = MPTINR_OPTIONS["n.optim"],
                       show.messages = FALSE,
@@ -241,4 +254,5 @@ for (i in seq_along(CI_SIZE)) {
 }
 
 
-results <- bind_rows(results, no_pooling, complete_pooling)
+  bind_rows(no_pooling, complete_pooling)
+}
