@@ -40,11 +40,11 @@ data[,COL_CONDITION] <- factor(data[,COL_CONDITION],
 TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 50000, n.adapt = 3000,
                    n.burnin = 2000, n.thin = 10,
                    Rhat_max = 1.05, Neff_min = 100,
-                   n.PPP = 2000, nCPU = 4)
+                   n.PPP = 2000, nCPU = 8)
 
 MPTINR_OPTIONS <- c(bootstrap_samples = 500,
                     n.optim = 10,
-                    nCPU = 3)
+                    nCPU = 8)
 
 CI_SIZE <- c(0.025, 0.1, 0.9, 0.975)
 MAX_CI_INDIV <- 0.99

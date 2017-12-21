@@ -71,15 +71,15 @@ mpt_treebugs <- function (dataset, data, model, method = "trait",
     # continue MCMC sampling
     while (
       method %in% c("beta", "trait") &&
-      any(summ[,"Rhat"] > TREEBUGS_MCMC["Rhat_max"], na.rm = TRUE)  ||
+      any(na.omit(summ[,"Rhat"]) > TREEBUGS_MCMC["Rhat_max"])  ||
       any(summ[summ[,"n.eff"] > 0,"n.eff"] < TREEBUGS_MCMC["Neff_min"], na.rm = TRUE) ){
       cat("Drawing additional samples for method = ", method, 
-          ". min(Rhat) = ", round(min(summ[,"Rhat"] > TREEBUGS_MCMC["Rhat_max"], na.rm = TRUE), 2),
-          " ; max(n.eff) = ", round(max(summ[summ[,"n.eff"] > 0,"n.eff"], na.rm = TRUE), 1), "\n")
+          ". max(Rhat) = ", round(max(na.omit(summ[summ[,"Rhat"] > 0,"Rhat"])), 2),
+          " ; min(n.eff) = ", round(min(summ[summ[,"n.eff"] > 0,"n.eff"], na.rm = TRUE), 1), "\n")
       treebugs_fit[[i]] <- extendMPT(treebugs_fit[[i]],
                                      n.iter = TREEBUGS_MCMC["n.iter"],
                                      n.adapt = TREEBUGS_MCMC["n.adapt"])
-      summ <- summarizeMCMC(treebugs_fit[[i]]$runjags$mcmc)
+      summ <- treebugs_fit[[i]]$mcmc.summ #summarizeMCMC(treebugs_fit[[i]]$runjags$mcmc)
     }
     
     # parameter estimates
