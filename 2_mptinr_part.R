@@ -2,6 +2,12 @@
 #source("1_prep_data.R")
 
 
+######### useful variables
+cols_ci <- paste0("ci_", CI_SIZE)
+conditions <- levels(factor(data[[column_condition]]))
+parameters <- check.mpt(EQN_FILE)$parameters
+
+
 cl <- makeCluster(rep("localhost", MPTINR_OPTIONS["nCPU"])) # make cluster
 clusterEvalQ(cl, library("MPTinR"))
 clusterExport(cl = cl,
@@ -71,7 +77,8 @@ for (i in seq_len(nrow(data))) {
        no_pooling$est_indiv[[1]]$id == data[i,"id"] &
          no_pooling$est_indiv[[1]]$parameter == p,
                              "se" ] <-
-     sd(fit_pb[[i]]$parameters$individual[p,"estimates",])   #TODO: SE instead of SD
+     sd(fit_pb[[i]]$parameters$individual[p,"estimates",])  / 
+     sqrt(dim(fit_pb[[i]]$parameters$individual)[3]) #TODO/CHECK: SE instead of SD
   }
 
   # gof_indiv
@@ -92,7 +99,7 @@ est_group <- tmp %>%
   filter(range_ci < MAX_CI_INDIV) %>%
   group_by(condition, parameter) %>%
   summarise(estN = mean(est),
-            se = sd(est) / sqrt(length(est)),
+            se = sd(est) / sqrt(length(est)),  #TODO/CHECK: SE instead of SD
             quant = list(as.data.frame(t(quantile(est, prob = CI_SIZE))))) %>%
   unnest(quant) %>%
   ungroup() %>%

@@ -2,37 +2,39 @@
 library("tidyr")
 library("dplyr")
 library("tibble")
-library("MPTinR")
-library("TreeBUGS")
-library("parallel")
 library("rlang")
 library("reshape2")
-library("tidyr")
+
+library("parallel")
+library("MPTinR")
+library("TreeBUGS")
 library("runjags")
 
+source("2_mptinr_part.R")
 source("3_treebugs_part.R")
 source("9_auxiliary_functions.R")
+
+# suppress output of JAGS sampler
+runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
+
 
 ################################### MPT model definition & Data
 EQN_FILE <- "2HTSM_Submodel4.eqn"
 DATA_FILE <- "Kuhlmann_dl7.csv"
 
-MODEL_NAME <- "2HTSM_4P"
-DATA_NAME <- "beatrice"
-
 data <- read.csv2(DATA_FILE, fileEncoding = "UTF-8-BOM")
 head(data)
 
-column_condition <- "ExpCond"
-column_id <- "Subject"
+COL_CONDITION <- "ExpCond"
+COL_ID <- "Subject"
 
 #data <- data[c(1,25),]
 
 # NOTE: experimental condition should be labeled meaningfully!
-unique(data[,column_condition])
-data[,column_condition] <- factor(data[,column_condition],
-                                  levels = c(1:2),
-                                  labels = c("no_load", "load"))
+unique(data[,COL_CONDITION])
+data[,COL_CONDITION] <- factor(data[,COL_CONDITION],
+                               levels = c(1:2),
+                               labels = c("no_load", "load"))
 
 
 TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 50000, n.adapt = 3000,
@@ -54,45 +56,37 @@ MAX_CI_INDIV <- 0.99
 
 ################################### data structure  ##########
 
+# COPIED TO mpt_XXX functions
+
 ## frequency columns are read from the EQN file and are alphabetically
 ## ordered within each tree! That is undocumented MPTinR behavior.
-column_freq <- get_eqn_categories(EQN_FILE)
+# col_freq <- get_eqn_categories(EQN_FILE)
 #c(3:5, 7, 6, 8, 11, 9, 10)
 #colnames(data)[column_freq]
+# data$id <- data[,COL_ID]
+# data$condition <- data[,COL_CONDITION]
+# data_list <- split(data[,c("id", "condition")], f = data[,COL_CONDITION])
+# freq_list <- split(data[,col_freq], f = data[,COL_CONDITION])
 
-data$id <- data[,column_id]
-data$condition <- data[,column_condition]
-data_list <- split(data[,c("id", "condition")], f = data[,column_condition])
-freq_list <- split(data[,column_freq], f = data[,column_condition])
 
-######### useful variables
 
-parameters <- check.mpt(EQN_FILE)$parameters
-conditions <- levels(data$condition)
+# for testing
+MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
+TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 2000, n.adapt = 100,
+                   n.burnin = 100, n.thin = 5,
+                   Rhat_max = 5, Neff_min = 5,
+                   n.PPP = 100, nCPU = 8)
+# res_test <- mpt_treebugs(dataset = DATA_FILE, data, model = EQN_FILE, method = "simple", 
+#                            col_id = COL_ID, col_condition = COL_CONDITION)
 
-cols_ci <- paste0("ci_", CI_SIZE)
+######### run
 
-#### setup
+res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
+                         col_id = COL_ID, col_condition = COL_CONDITION)
+res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
+                       FUN = mpt_treebugs, 
+                       dataset = DATA_FILE, data = data, model = EQN_FILE,
+                       col_id = COL_ID, col_condition = COL_CONDITION)
 
-#### run
-
-# results <- tibble(
-#   model = character(),
-#   dataset = character(),
-#   pooling = character(),
-#   package = character(),
-#   method = character(),
-#   est_group = list(NULL),
-#   est_indiv = list(NULL),
-#   test_between = list(NULL),
-#   #est_cov = est_cov,
-#   gof = list(NULL),
-#   gof_group = list(NULL),
-#   gof_indiv = list(NULL)
-# )
-
-# source("2_mptinr_part.R")
-results <- bind_rows(mpt_treebugs(DATA_FILE, model = EQN_FILE, method = "trait"),
-                     mpt_treebugs(DATA_FILE, model = EQN_FILE, method = "beta"))
-
+results <- bind_rows(res_mptinr, res_treebugs) #res_simple, res_trait, res_beta)
 results
