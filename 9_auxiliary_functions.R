@@ -97,6 +97,28 @@ make_results_row <- function(model, dataset, pooling, package, method,
   )
 }
 
+prep_data_fitting <- function(data, # data.frame 
+                              model_file, 
+                              col_id, 
+                              col_condition) {
+  if (!is.factor(data[[col_condition]])) {
+    stop(col_condition, " (condition column) needs to be a factor!", 
+         call. = FALSE)
+  }
+  
+  data$id <- data[,col_id]
+  data$condition <- data[,col_condition]
+  col_freq <- get_eqn_categories(model_file)
+  
+  out <- list(
+    conditions = levels(data[[col_condition]]),
+    parameters = check.mpt(model_file)$parameters,
+    col_freq = col_freq,
+    freq_list = split(data[,col_freq], f = data[,col_condition]),
+    cols_ci = paste0("ci_", CI_SIZE),
+    data = data
+  )
+}
 
 get_eqn_categories <- function (model.filename)
 {
