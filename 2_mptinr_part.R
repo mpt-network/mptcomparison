@@ -46,7 +46,7 @@ mpt_mptinr_no <- function(dataset,
                                  dataset = dataset,
                                  pooling = "no",
                                  package = "MPTinR",
-                                 method = "PB",
+                                 method = "PB/MLE",
                                  data = prepared$data,
                                  parameters = prepared$parameters)
   
