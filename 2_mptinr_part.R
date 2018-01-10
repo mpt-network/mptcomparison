@@ -175,6 +175,40 @@ mpt_mptinr_no <- function(dataset,
     (sum(no_pooling$gof[[1]]$stat_obs < g2_cond) + 1) /
     (MPTINR_OPTIONS["bootstrap_samples"] + 1)
   
+  ### test between ###
+  
+  
+  for (i in seq_len(nrow(no_pooling$test_between[[1]]))) {
+    tmp_par <- no_pooling$test_between[[1]]$parameter[i]
+    tmp_c1 <- no_pooling$test_between[[1]]$condition1[i]
+    tmp_c2 <- no_pooling$test_between[[1]]$condition2[i]
+    
+    tmp_df <- droplevels(no_pooling$est_indiv[[1]][ 
+      no_pooling$est_indiv[[1]]$parameter == tmp_par & 
+        no_pooling$est_indiv[[1]]$condition %in% 
+        c(as.character(tmp_c1), as.character(tmp_c2)) , ])
+    
+    tmp_t <- t.test(tmp_df[ tmp_df$condition == tmp_c1,  ]$est, 
+                    tmp_df[ tmp_df$condition == tmp_c2,  ]$est)
+    
+    tmp_lm <- lm(est ~ condition, tmp_df)
+    
+    tmp_se <- coef(summary(tmp_lm))[2,"Std. Error"]
+    
+    no_pooling$test_between[[1]][ 
+      no_pooling$test_between[[1]]$parameter == tmp_par , 
+      c("est_diff" , "se", "p") ] <- 
+      c(diff(rev(tmp_t$estimate)), tmp_se, tmp_t$p.value)
+    
+    no_pooling$test_between[[1]][ 
+      no_pooling$test_between[[1]]$parameter == tmp_par, prepared$cols_ci] <- 
+      no_pooling$test_between[[1]][ 
+        no_pooling$test_between[[1]]$parameter == tmp_par ,]$est_diff + 
+      qnorm(CI_SIZE)* no_pooling$test_between[[1]][ 
+        no_pooling$test_between[[1]]$parameter == tmp_par ,]$se
+    
+  }
+  
   stopCluster(cl)
   
   return(no_pooling)
