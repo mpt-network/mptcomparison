@@ -7,10 +7,11 @@ unnest(results, est_group) %>%
              col=interaction(method, pooling,package),
              shape=interaction(method, pooling,package))) +
   facet_grid(.~condition) +
-  geom_errorbar(aes(ymin = est-se, ymax = est+se), position = dd)+
+  geom_errorbar(aes(ymin = est-se, ymax = est+se), position = dd, 
+                width = 0.4)+
   geom_point(position = dd) + ylim(0,1) + 
   theme_bw()
-ggsave("plots/estimates.pdf", h = 4.5, w = 8)
+ggsave("plots/estimates.pdf", h = 4.5, w = 10)
 
 
 unnest(results, test_between) %>%
@@ -18,10 +19,11 @@ unnest(results, test_between) %>%
              col=interaction(method, pooling,package),
              shape=interaction(method, pooling,package))) +
   facet_grid(condition2~condition1) +
-  geom_errorbar(aes(ymin = ci_0.025, ymax = ci_0.975), position = dd)+
+  geom_errorbar(aes(ymin = ci_0.025, ymax = ci_0.975), 
+                position = dd, width = 0.5)+
   geom_point(position = dd) + ylim(-1,1) + 
   theme_bw() + geom_hline(yintercept = 0, lty = 2)
-ggsave("plots/test_between.pdf", h = 4.5, w = 5)
+ggsave("plots/test_between.pdf", h = 4.5, w = 8)
 
 
 unnest(results, gof) %>%
