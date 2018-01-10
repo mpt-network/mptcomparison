@@ -86,8 +86,7 @@ mpt_mptinr_no <- function(dataset,
       no_pooling$est_indiv[[1]][
         no_pooling$est_indiv[[1]]$id == prepared$data[i,"id"] &
           no_pooling$est_indiv[[1]]$parameter == p, "se" ] <-
-        sd(fit_pb[[i]]$parameters$individual[p,"estimates",])  / 
-        sqrt(nrow(prepared$data))
+        sd(fit_pb[[i]]$parameters$individual[p,"estimates",]) 
     }
     
     # gof_indiv
