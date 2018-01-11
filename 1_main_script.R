@@ -1,15 +1,42 @@
+#############################################
+## Install developer version of TreeBUGS   ##
+#############################################
+
+## * cf. installation instructions: 
+##   - https://github.com/denis-arnold/TreeBUGS 
+##
+## * on Windows this requires to install "Rtools" for building C++ packages:
+##   - https://cran.r-project.org/bin/windows/Rtools/     
+##
+## * on Mac this requires "Xcode Command Line Tools"
+##   - https://www.maketecheasier.com/install-command-line-tools-without-xcode/
+##   - it might be necessary to install the library "gfortran" manually:
+##        curl -O http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2
+##        sudo tar fvxz gfortran-4.8.2-darwin13.tar.bz2 -C /  
+
+## uncomment and run the following three lines once to install dependencies:
+# install.packages(c("devtools", "runjags", "hypergeo","rjags", "logspline","RcppArmadillo"))
+# library("devtools")
+# devtools::install_github("denis-arnold/TreeBUGS")
+
+
+#################################
+## Load packages and scripts   ##
+#################################
+
+# load packages
 library("tidyr")
 library("dplyr")
 library("tibble")
 library("rlang")
 library("reshape2")
 library("ggplot2")
-
 library("parallel")
 library("MPTinR")
 library("TreeBUGS")
 library("runjags")
 
+# load scripts. make sure that working directory is correct via: setwd() / getwd()
 source("2_mptinr_part.R")
 source("3_treebugs_part.R")
 source("9_auxiliary_functions.R")
