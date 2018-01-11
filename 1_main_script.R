@@ -69,11 +69,11 @@ CI_SIZE <- c(0.025, 0.1, 0.9, 0.975)
 MAX_CI_INDIV <- 0.99
 
 ### different settings for testing (faster, but inaccurate results!)
-MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
-TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 2000, n.adapt = 100,
-                   n.burnin = 100, n.thin = 5,
-                   Rhat_max = 5, Neff_min = 5,
-                   n.PPP = 100, nCPU = 8)
+# MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
+# TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 2000, n.adapt = 100,
+#                    n.burnin = 100, n.thin = 5,
+#                    Rhat_max = 5, Neff_min = 5,
+#                    n.PPP = 100, nCPU = 8)
 
 
 ##############################
