@@ -36,7 +36,9 @@ library("MPTinR")
 library("TreeBUGS")
 library("runjags")
 
-# load scripts. make sure that working directory is correct via: setwd() / getwd()
+# load scripts. make sure that working directory is correct via either:
+# - setwd() / getwd()
+# Rstudio->Sessions->Set Working Directory->'To Source File Location'
 source("2_mptinr_part.R")
 source("3_treebugs_part.R")
 source("9_auxiliary_functions.R")

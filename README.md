@@ -10,7 +10,7 @@ R scripts for fitting different types of MPT models using MPTinR and TreeBUGS.
     * To encode fixed parameters (e.g., g=.50), replace the parameter in the eqn-file by the constant
 2. Copy the data with individual frequencies as a .csv-file into the main folder (cf. `Kuhlmann_dl7.csv`)
 3. Open the file `1_main_script.R` and adjust the input options in the section "MPT model definition & Data"
-4. Set the working directory to the main folder (using either `setwd()` or in Rstudio->Sessions->Set Working Directory)
+4. Set the working directory to the main folder (using either `setwd()` or in Rstudio->Sessions->Set Working Directory->'To Source File Location')
 5. Install all packages that are listed on top of the main script
     * Note: The latest developer version of TreeBUGS is required. See instructions in the main script or https://github.com/denis-arnold/TreeBUGS
 4. Run the full script
