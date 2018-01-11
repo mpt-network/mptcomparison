@@ -251,8 +251,8 @@ mpt_mptinr_complete <- function(dataset,
                                        data = prepared$data,
                                        parameters = prepared$parameters)
   
-  complete_pooling$est_indiv <- list(NULL)
-  complete_pooling$gof_indiv <- list(NULL)
+  complete_pooling$est_indiv <- list(tibble())
+  complete_pooling$gof_indiv <- list(tibble())
   
   #### fully aggregated:
   
