@@ -1,6 +1,6 @@
 library("ggplot2")
 
-prefix <- gsub("\\.", "_", paste0("plots/",results$dataset[1],"_"))
+prefix <- gsub("\\.", "_", paste0("results/",results$dataset[1],"_"))
 prefix
 
 dd <- position_dodge(w = .5)

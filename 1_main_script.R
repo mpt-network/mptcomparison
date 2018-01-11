@@ -91,5 +91,6 @@ res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
 results <- bind_rows(res_mptinr, res_treebugs)
 results
 
-save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
-source("4_summary_plots.R")  # requires a subfolder "/plots"
+# requires a subfolder "/results"
+save(results, file = paste0("results/", EQN_FILE, "-", DATA_FILE, ".RData"))
+source("4_summary_plots.R")
