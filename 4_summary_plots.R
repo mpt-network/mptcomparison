@@ -1,5 +1,7 @@
 library("ggplot2")
 
+prefix <- gsub("\\.", "_", paste0("plots/",results$dataset[1],"_"))
+prefix
 
 dd <- position_dodge(w = .5)
 unnest(results, est_group) %>%
@@ -11,7 +13,7 @@ unnest(results, est_group) %>%
                 width = 0.4)+
   geom_point(position = dd) + ylim(0,1) + 
   theme_bw()
-ggsave("plots/estimates.pdf", h = 4.5, w = 10)
+ggsave(paste0(prefix,"estimates.pdf"), h = 4.5, w = 10)
 
 
 unnest(results, test_between) %>%
@@ -23,7 +25,7 @@ unnest(results, test_between) %>%
                 position = dd, width = 0.5)+
   geom_point(position = dd) + ylim(-1,1) + 
   theme_bw() + geom_hline(yintercept = 0, lty = 2)
-ggsave("plots/test_between.pdf", h = 4.5, w = 8)
+ggsave(paste0(prefix,"test_between.pdf"), h = 4.5, w = 8)
 
 
 unnest(results, gof) %>%
@@ -32,7 +34,7 @@ unnest(results, gof) %>%
   geom_point() + ylim(0, 1) + 
   geom_hline(yintercept = .05, lty = 2)+
   theme_bw()
-ggsave("plots/gof.pdf", h = 4, w = 5)
+ggsave(paste0(prefix,"gof.pdf"), h = 4, w = 5)
 
 
 unnest(results, gof_group) %>%
@@ -41,6 +43,6 @@ unnest(results, gof_group) %>%
   geom_point() + ylim(0, 1) + 
   geom_hline(yintercept = .05, lty = 2)+
   theme_bw()
-ggsave("plots/gof_group.pdf", h = 4, w = 5)
+ggsave(paste0(prefix,"gof_group.pdf"), h = 4, w = 5)
 
 

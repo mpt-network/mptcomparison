@@ -4,6 +4,7 @@ library("dplyr")
 library("tibble")
 library("rlang")
 library("reshape2")
+library("ggplot2")
 
 library("parallel")
 library("MPTinR")
@@ -18,7 +19,10 @@ source("9_auxiliary_functions.R")
 runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 
 
-################################### MPT model definition & Data
+#################################
+## MPT model definition & Data ##
+#################################
+
 EQN_FILE <- "2HTSM_Submodel4.eqn"
 DATA_FILE <- "Kuhlmann_dl7.csv"
 
@@ -35,6 +39,10 @@ data[,COL_CONDITION] <- factor(data[,COL_CONDITION],
                                labels = c("no_load", "load"))
 
 
+#################################
+## Settings                    ##
+#################################
+
 TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 50000, n.adapt = 3000,
                    n.burnin = 2000, n.thin = 10,
                    Rhat_max = 1.05, Neff_min = 100,
@@ -47,11 +55,6 @@ MPTINR_OPTIONS <- c(bootstrap_samples = 500,
 CI_SIZE <- c(0.025, 0.1, 0.9, 0.975)
 MAX_CI_INDIV <- 0.99
 
-
-##############################
-## DO NOT CHANGE CODE BELOW ##
-##############################
-
 # ### different settings for testing (faster, but inaccurate results)
 # MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
 # TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 2000, n.adapt = 100,
@@ -59,8 +62,14 @@ MAX_CI_INDIV <- 0.99
 #                    Rhat_max = 5, Neff_min = 5,
 #                    n.PPP = 100, nCPU = 8)
 
+
+##############################
+## Analysis (do not change) ##
+##############################
+
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
+
 res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
                        FUN = mpt_treebugs, 
                        dataset = DATA_FILE, data = data, model = EQN_FILE,
@@ -68,4 +77,6 @@ res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
 
 results <- bind_rows(res_mptinr, res_treebugs)
 results
+
 save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
+source("4_summary_plots.R")  # requires a subfolder "/plots"
