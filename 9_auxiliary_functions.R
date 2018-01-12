@@ -52,15 +52,20 @@ make_results_row <- function(model, dataset, pooling, package, method,
   
   
   # group comparisons
-  pairs <- combn(conditions, 2)
-  test_between <- 
-    as_tibble(expand.grid(parameter = parameters, 
-                          condition1 = factor(pairs[1,], levels = conditions),
-                          condition2 = factor(pairs[2,], levels = conditions))) %>% 
-    mutate(est_diff = NA_real_, se = NA_real_, p = NA_real_)
-  tibble_ci <- as_tibble(matrix(NA_real_, nrow(test_between), length(CI_SIZE),
-                                dimnames = list(NULL, paste0("ci_", CI_SIZE))))
-  test_between <- bind_cols(test_between, tibble_ci)
+  if (length(conditions) > 1) {
+      pairs <- combn(conditions, 2)
+      test_between <- 
+        as_tibble(expand.grid(parameter = parameters, 
+                              condition1 = factor(pairs[1,], levels = conditions),
+                              condition2 = factor(pairs[2,], levels = conditions))) %>% 
+        mutate(est_diff = NA_real_, se = NA_real_, p = NA_real_)
+      tibble_ci <- as_tibble(matrix(NA_real_, nrow(test_between), length(CI_SIZE),
+                                    dimnames = list(NULL, paste0("ci_", CI_SIZE))))
+      test_between <- bind_cols(test_between, tibble_ci)
+  } else {
+    test_between <- data.frame()
+  }
+
   
   
   ## est_covariate <- ##MISSING
