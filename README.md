@@ -22,8 +22,8 @@ no, partial).
     * Note: The latest developer version of TreeBUGS is required. It can be 
             installed using the instructions on top of the main script.
 5. Set the working directory to your subfolder
-    A) Use `setwd()`
-    B) in Rstudio:  Rstudio->Sessions->Set Working Directory->'To Source File Location'
+    1. Use `setwd()`
+    1. in Rstudio:  Rstudio->Sessions->Set Working Directory->'To Source File Location'
 6. Run the main script
     * Note: For testing purposes, MCMC and bootstrap options can be changed under "Settings"
 7. The script will save an `.RData` file with results and a few summary plots.
