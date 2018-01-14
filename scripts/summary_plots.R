@@ -5,7 +5,7 @@ plot_results <- function (results, save = TRUE){
   prefix <- gsub("\\.", "_", paste0(results$dataset[1],"_"))
   
   dd <- position_dodge(w = .5)
-  unnest(results, est_group) %>%
+  gg_est1 <- unnest(results, est_group) %>%
     ggplot(aes(y = est, x = parameter, 
                col=interaction(method, pooling,package),
                shape=interaction(method, pooling,package))) +
@@ -14,12 +14,13 @@ plot_results <- function (results, save = TRUE){
                   width = 0.4)+
     geom_point(position = dd) + ylim(0,1) + 
     theme_bw()
-  if(save) ggsave(paste0(prefix,"estimates.pdf"), h = 4.5, w = 10)
+  plot(gg_est1)
+  if(save) ggsave(paste0(prefix,"estimates.pdf"), gg_est1, h = 4.5, w = 10)
   
   
   res_between <-  unnest(results, test_between) 
   if (nrow(res_between) > 0){
-    ggplot(res_between, aes(y = est_diff, x = parameter, 
+    gg_est2 <- ggplot(res_between, aes(y = est_diff, x = parameter, 
                             col=interaction(method, pooling,package),
                             shape=interaction(method, pooling,package))) +
       facet_grid(condition2~condition1) +
@@ -27,11 +28,12 @@ plot_results <- function (results, save = TRUE){
                     position = dd, width = 0.5)+
       geom_point(position = dd) + ylim(-1,1) + 
       theme_bw() + geom_hline(yintercept = 0, lty = 2)
-    if(save) ggsave(paste0(prefix,"test_between.pdf"), h = 4.5, w = 8)
+    plot(gg_est2)
+    if(save) ggsave(paste0(prefix,"test_between.pdf"), gg_est2, h = 4.5, w = 8)
   }
   
   
-  unnest(results, gof) %>%
+  gg_gof1 <-  unnest(results, gof) %>%
     # filter(focus == "mean") %>%
     ggplot(aes(y = p, 
                x = interaction(method, pooling, package))) + 
@@ -40,11 +42,12 @@ plot_results <- function (results, save = TRUE){
     theme_bw() + coord_flip() +
     facet_wrap(~focus) +
     ggtitle("Goodness of fit")
-  if(save) ggsave(paste0(prefix,"gof.pdf"), h = 4, w = 5)
+  plot(gg_gof1)
+  if(save) ggsave(paste0(prefix,"gof.pdf"), gg_gof1, h = 4, w = 5)
   
   
   if (nrow(res_between) > 0){
-    unnest(results, gof_group) %>%
+    gg_gof2 <- unnest(results, gof_group) %>%
       ggplot(aes(y = p, 
                  x = interaction(method, pooling, package), 
                  col = condition)) + 
@@ -54,6 +57,7 @@ plot_results <- function (results, save = TRUE){
       coord_flip() +
       facet_wrap(~focus) +
       ggtitle("Goodness of fit")
-    if(save) ggsave(paste0(prefix,"gof_group.pdf"), h = 4, w = 5)
+    plot(gg_gof2)
+    if(save) ggsave(paste0(prefix,"gof_group.pdf"), gg_gof2, h = 4, w = 5)
   }
 }
