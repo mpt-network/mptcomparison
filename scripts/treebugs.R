@@ -31,7 +31,7 @@ mpt_treebugs <- function (dataset, data, model, method = "trait",
                                  dataset = dataset,
                                  pooling = pooling,
                                  package = "TreeBUGS",
-                                 method = method,
+                                 method = sub("_pooling","", method, fixed = TRUE),
                                  data = data,
                                  parameters = parameters)
   if (method == "simple_pooling"){
