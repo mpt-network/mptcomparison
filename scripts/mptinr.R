@@ -54,7 +54,14 @@ mpt_mptinr_no <- function(dataset,
                         model.filename = model,
                         n.optim = MPTINR_OPTIONS["n.optim"],
                         fit.aggregated = FALSE,
-                        show.messages = FALSE)
+                        show.messages = FALSE, output = "full")
+  
+  convergence <- data.frame(id = prepared$data[,col_id],
+             condition = prepared$data[,col_condition],
+             fit_mptinr$model.info$individual[,1:2],
+             convergence = 
+               vapply(fit_mptinr$best.fits$individual, 
+                      function(x) x$convergence, 0 ))
   
   no_pooling$gof_indiv[[1]]$type <- "pb-G2"
   no_pooling$gof_indiv[[1]]$focus <- "mean"
@@ -104,11 +111,27 @@ mpt_mptinr_no <- function(dataset,
   tmp$range_ci <- tmp[,prepared$cols_ci[length(prepared$cols_ci)]][[1]] - 
     tmp[,prepared$cols_ci[1]][[1]]
   
+  non_identified_pars <-  tmp %>%
+    filter(range_ci > MAX_CI_INDIV) %>% 
+    group_by(id) %>% 
+    summarise(parameter = paste0(parameter, collapse = ", ")) %>% 
+    ungroup 
+  no_pooling$convergence <- 
+    list(as_tibble(left_join(convergence, non_identified_pars, by = "id")))
+  
+  if (nrow(non_identified_pars) > 0) {
+    warning("MPTinR-no: IDs and parameters with PB-CIs > ",
+            MAX_CI_INDIV, " (i.e., non-identified):\n", 
+            apply(non_identified_pars, 
+                  1, function(x) paste0(x["id"], ": ", x["parameter"], "\n") ),
+            call. = FALSE)    
+  }
+
   est_group <- tmp %>%
     filter(range_ci < MAX_CI_INDIV) %>%
     group_by(condition, parameter) %>%
     summarise(estN = mean(est),
-              se = sd(est) / sqrt(length(est)),
+              se = sd(est) / sqrt(n()),
               quant = list(as.data.frame(t(quantile(est, prob = CI_SIZE))))) %>%
     unnest(quant) %>%
     ungroup() %>%
@@ -259,7 +282,7 @@ mpt_mptinr_complete <- function(dataset,
   fit_mptinr_agg <- fit.mpt(colSums(prepared$data[,prepared$col_freq]),
                             model.filename = model,
                             n.optim = MPTINR_OPTIONS["n.optim"],
-                            show.messages = FALSE)
+                            show.messages = FALSE, output = "full")
   
   ## gof
   
@@ -276,6 +299,13 @@ mpt_mptinr_complete <- function(dataset,
   
   complete_pooling$gof_group[[1]][,"type"] <- "G2"
   complete_pooling$gof_group[[1]][,"focus"] <- "mean"
+  
+  convergence <- vector("list", 1 + length(prepared$conditions))
+  names(convergence) <- c("aggregated", prepared$conditions)
+  convergence$aggregated <- as_tibble(data.frame(
+             fit_mptinr_agg$model.info[,1:2],
+             convergence = fit_mptinr_agg$best.fits[[1]]$convergence))
+  
   
   for (i in seq_along(prepared$conditions)) {
     fit_mptinr_tmp <- fit.mpt(colSums(
@@ -320,6 +350,9 @@ mpt_mptinr_complete <- function(dataset,
             prepared$conditions[i],
           ]$parameter]
     
+    convergence[[prepared$conditions[i]]] <- as_tibble(data.frame(
+             fit_mptinr_tmp$model.info[,1:2],
+             convergence = fit_mptinr_tmp$best.fits[[1]]$convergence))
   }
   
   for (i in seq_along(CI_SIZE)) {
@@ -328,6 +361,13 @@ mpt_mptinr_complete <- function(dataset,
       qnorm(CI_SIZE[i])*complete_pooling$est_group[[1]][,"se"]
   }
   
+  complete_pooling$convergence <- list(convergence)
+  warn_conv <- vapply(convergence, function(x) x$convergence, 0) != 0
+  if (any(warn_conv)) {
+    warning("MPTinR-complete: Convergence code != 0 for: ", 
+            paste0(names(warn_conv)[warn_conv], collapse = ", "), 
+            call. = FALSE)
+  }
   
   return(complete_pooling)
 }
