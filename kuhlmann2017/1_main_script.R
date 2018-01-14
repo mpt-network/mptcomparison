@@ -123,4 +123,4 @@ results
 # requires a subfolder "/results"
 save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
 
-plot_results(results)
+plot_results(results, save = TRUE)
