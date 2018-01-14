@@ -1,6 +1,6 @@
 library("ggplot2")
 
-plot_results <- function (results){
+plot_results <- function (results, save = TRUE){
   
   prefix <- gsub("\\.", "_", paste0(results$dataset[1],"_"))
   
@@ -14,7 +14,7 @@ plot_results <- function (results){
                   width = 0.4)+
     geom_point(position = dd) + ylim(0,1) + 
     theme_bw()
-  ggsave(paste0(prefix,"estimates.pdf"), h = 4.5, w = 10)
+  if(save) ggsave(paste0(prefix,"estimates.pdf"), h = 4.5, w = 10)
   
   
   res_between <-  unnest(results, test_between) 
@@ -27,26 +27,33 @@ plot_results <- function (results){
                     position = dd, width = 0.5)+
       geom_point(position = dd) + ylim(-1,1) + 
       theme_bw() + geom_hline(yintercept = 0, lty = 2)
-    ggsave(paste0(prefix,"test_between.pdf"), h = 4.5, w = 8)
+    if(save) ggsave(paste0(prefix,"test_between.pdf"), h = 4.5, w = 8)
   }
   
   
   unnest(results, gof) %>%
-    filter(focus == "mean") %>%
-    ggplot(aes(y = p, x = method)) + 
+    # filter(focus == "mean") %>%
+    ggplot(aes(y = p, 
+               x = interaction(method, pooling, package))) + 
     geom_point() + ylim(0, 1) + 
     geom_hline(yintercept = .05, lty = 2)+
-    theme_bw()
-  ggsave(paste0(prefix,"gof.pdf"), h = 4, w = 5)
+    theme_bw() + coord_flip() +
+    facet_wrap(~focus) +
+    ggtitle("Goodness of fit")
+  if(save) ggsave(paste0(prefix,"gof.pdf"), h = 4, w = 5)
   
   
   if (nrow(res_between) > 0){
     unnest(results, gof_group) %>%
-      filter(focus == "mean") %>%
-      ggplot(aes(y = p, x = method, col = condition)) + 
+      ggplot(aes(y = p, 
+                 x = interaction(method, pooling, package), 
+                 col = condition)) + 
       geom_point() + ylim(0, 1) + 
       geom_hline(yintercept = .05, lty = 2)+
-      theme_bw()
-    ggsave(paste0(prefix,"gof_group.pdf"), h = 4, w = 5)
+      theme_bw() +
+      coord_flip() +
+      facet_wrap(~focus) +
+      ggtitle("Goodness of fit")
+    if(save) ggsave(paste0(prefix,"gof_group.pdf"), h = 4, w = 5)
   }
 }
