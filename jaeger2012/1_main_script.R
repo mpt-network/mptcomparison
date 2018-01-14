@@ -53,16 +53,12 @@ DATA_FILE <- "Jaeger_2012.csv"
 
 
 ### if .csv format uses semicolons ";" (German format)
-data <- read.csv(DATA_FILE, fileEncoding = "UTF-8-BOM")
+data <- read.csv(DATA_FILE)
 ### if .csv format uses commata "," (international format)
-# data <- read.csv(DATA_FILE, fileEncoding = "UTF-8-BOM")
+# data <- read.csv(DATA_FILE)
 head(data)
 
-## note, ordering of categories within each tree is alphabetical.
-plotFreq(data[,get_eqn_categories(EQN_FILE)], boxplot = FALSE, eqn = EQN_FILE)
-
-## perhaps better:
-plotFreq(data[,2:13], boxplot = FALSE, eqn = EQN_FILE)
+plotFreq(data, boxplot = FALSE, eqn = EQN_FILE)
 
 ## we have a look which participants have considerable number of zero cells
 # (i.e., more than 1/3 of cells empty)
