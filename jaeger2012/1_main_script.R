@@ -57,7 +57,22 @@ data <- read.csv(DATA_FILE, fileEncoding = "UTF-8-BOM")
 ### if .csv format uses commata "," (international format)
 # data <- read.csv(DATA_FILE, fileEncoding = "UTF-8-BOM")
 head(data)
-plotFreq(data, boxplot = FALSE, eqn = "2htm.eqn")
+
+## note, ordering of categories within each tree is alphabetical.
+plotFreq(data[,get_eqn_categories(EQN_FILE)], boxplot = FALSE, eqn = EQN_FILE)
+
+## perhaps better:
+plotFreq(data[,2:13], boxplot = FALSE, eqn = EQN_FILE)
+
+## we have a look which participants have considerable number of zero cells
+# (i.e., more than 1/3 of cells empty)
+empty_cells <- data[,get_eqn_categories(EQN_FILE)] %>% 
+  apply(1, function(x) mean(x == 0)) 
+empty_cells
+
+which(empty_cells > 1/3)
+
+data[which(empty_cells > 1/3),]
 
 ### outliers:
 data <- data[-c(35,28),]
