@@ -140,7 +140,5 @@ results
 
 # store results
 save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
-sink(paste0(DATA_FILE, "_check_results.txt"))
-check_results(results)
-sink()
+write_check_results(DATA_FILE, results)
 plot_results(results, save = TRUE)

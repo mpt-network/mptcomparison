@@ -240,3 +240,16 @@ check_results <- function(results) {
   
   
 }
+
+
+write_check_results <- function(DATA_FILE, results){
+  sink(paste0(DATA_FILE, "_check_results.txt"))
+  cat("################ OPTIONS ################\n\n")
+  cat("TreeBUGS:\n") ; print(TREEBUGS_MCMC)
+  cat("\nMPTinR:\n") ; print(MPTINR_OPTIONS)
+  cat("\nCI_SIZE: ", CI_SIZE, "\n")
+  cat("MAX_CI_INDIV = ", MAX_CI_INDIV, "\n\n")
+  cat("################ CHECK RESULTS ################\n\n")
+  print(check_results(results))
+  sink()
+}
