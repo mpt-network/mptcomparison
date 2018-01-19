@@ -34,6 +34,7 @@ library("MPTinR")
 library("TreeBUGS")
 library("runjags")
 library("purrr")
+library("broom") # for tidy
 runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 
 # load scripts. make sure that working directory is correct via either:
@@ -132,7 +133,9 @@ res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta"),
                        col_id = COL_ID, col_condition = COL_CONDITION)
 
 results <- bind_rows(res_mptinr, res_treebugs)
+check_results(results)
 results
+
 
 # requires a subfolder "/results"
 save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))

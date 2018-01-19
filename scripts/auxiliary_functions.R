@@ -149,3 +149,88 @@ get_eqn_categories <- function (model.filename)
   # names(model) <- NULL
   # model
 }
+
+
+check_results <- function(results) {
+  #browser()
+  expected <- structure(list(pooling = c("no", "complete", "no", "complete", 
+          "partial", "partial"), package = c("MPTinR", "MPTinR", "TreeBUGS", 
+          "TreeBUGS", "TreeBUGS", "TreeBUGS"), method = c("PB/MLE", "asymptotic", 
+          "simple", "simple", "trait", "beta")), .Names = c("pooling", 
+          "package", "method"), class = c("tbl_df", "tbl", "data.frame"
+          ), row.names = c(NA, -6L))
+  missing <- anti_join(expected, results[,3:5], by = c("pooling", "package", "method"))
+  if (nrow(missing) > 0) {
+    cat("## Following analyses approaches missing from results:\n", 
+            paste(apply(missing, 1, paste, collapse = ", "), collapse = "\n"), 
+        "\n\n\n")
+  }
+  
+  ### MPTinR: no pooling ###
+  
+  cat("## MPTinR: no pooling\n")
+  
+  conv_mptinr_no <- results %>% 
+    filter(package == "MPTinR" & pooling == "no") %>% 
+    select(convergence) %>% 
+    unnest() 
+  
+  not_id <- conv_mptinr_no %>% 
+    group_by(condition) %>% 
+    summarise(proportion = mean(!is.na(parameter)))
+  not_id2 <- conv_mptinr_no %>% 
+    group_by(condition) %>% 
+    summarise(not_identified = list(tidy(table(parameter)))) %>% 
+    unnest()
+  if (any(not_id$proportion > 0)) {
+    cat("Proportion of participants with non-identified parameters:\n")
+    cat(format(not_id)[-c(1,3)], "", sep = "\n")
+    
+    cat("Table of non-identified parameters:\n")
+    cat(format(not_id2)[-c(1,3)], sep = "\n")
+    
+  }
+  
+  cat("\n\n")
+  
+  
+  ### MPTinR: complete pooling ###
+  
+  cat("## MPTinR: complete pooling\n")
+
+  conv_mptinr_comp <- results %>%
+    filter(package == "MPTinR" & pooling == "complete") %>%
+    select(convergence) %>%
+      unnest()
+  
+  comp_prob <- (conv_mptinr_comp$convergence != 0) | 
+    (conv_mptinr_comp$rank.fisher != conv_mptinr_comp$n.parameters)
+  
+  if (any(comp_prob)) {
+    cat("Convergence problems:\n")
+    cat(format(conv_mptinr_comp[comp_prob,])[-c(1,3)], "", sep = "\n")
+  }
+
+  cat("\n\n")
+  
+  ### TreeBUGS
+  res_tree <- results %>% 
+    filter(package == "TreeBUGS") %>% 
+    select(!!c("pooling", "package", "method", "convergence"))
+  
+  for (i in seq_len(nrow(res_tree))) {
+    cat("## ", paste(res_tree[i, c(2,1,3)], collapse = ", "), ":\n", sep = "")
+    
+    tmp_convergence <- res_tree[i,]$convergence[[1]] %>% 
+      filter(Rhat > 1.05) 
+    
+    if(nrow(tmp_convergence) > 0) {
+      cat(nrow(tmp_convergence), "parameters with Rhat > 1.05:\n")
+      cat(paste(tmp_convergence$parameter, collapse = ", "))
+    }
+    
+    cat("\n\n")
+  }
+  
+  
+}

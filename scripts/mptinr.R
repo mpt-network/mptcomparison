@@ -361,8 +361,13 @@ mpt_mptinr_complete <- function(dataset,
       qnorm(CI_SIZE[i])*complete_pooling$est_group[[1]][,"se"]
   }
   
+  tmp <- names(convergence)
+  convergence <- do.call("rbind", convergence)
+  convergence <- bind_cols(condition = factor(tmp), 
+                           convergence)
+  
   complete_pooling$convergence <- list(convergence)
-  warn_conv <- vapply(convergence, function(x) x$convergence, 0) != 0
+  warn_conv <- convergence$convergence != 0
   if (any(warn_conv)) {
     warning("MPTinR-complete: Convergence code != 0 for: ", 
             paste0(names(warn_conv)[warn_conv], collapse = ", "), 
