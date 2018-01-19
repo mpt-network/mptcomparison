@@ -33,6 +33,7 @@ library("parallel")
 library("MPTinR")
 library("TreeBUGS")
 library("runjags")
+library("purrr")
 runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 
 # load scripts. make sure that working directory is correct via either:
@@ -48,9 +49,13 @@ source("../scripts/summary_plots.R")
 ## MPT model definition & Data ##
 #################################
 
-EQN_FILE <- "2htm.eqn"
-DATA_FILE <- "Jaeger_2012.csv"  
 
+EQN_FILE <- "2htm.eqn"
+### Two model versions:
+# - "2htm.eqn" has symmetric response mapping for detection states,
+#   unconstrained response mapping for guessing states.
+# - "2htm_ord-g.eqn" has additional ordering on guessing mapping
+DATA_FILE <- "Jaeger_2012.csv"  
 
 ### if .csv format uses semicolons ";" (German format)
 data <- read.csv(DATA_FILE)
@@ -58,21 +63,17 @@ data <- read.csv(DATA_FILE)
 # data <- read.csv(DATA_FILE)
 head(data)
 
-plotFreq(data, boxplot = FALSE, eqn = EQN_FILE)
+plotFreq(data, boxplot = FALSE, eqn = EQN_FILE) 
+## if not excluding two participants with many high-confidence errors for OLD 
+# items, beta-MPT with TreeBUGS fails: data <- data[-c(35,28),]
 
-## we have a look which participants have considerable number of zero cells
-# (i.e., more than 1/3 of cells empty)
+## we can also have a look which participants have considerable number of zero 
+# cells (i.e., more than 1/3 of cells empty)
 empty_cells <- data[,get_eqn_categories(EQN_FILE)] %>% 
   apply(1, function(x) mean(x == 0)) 
 empty_cells
 
 which(empty_cells > 1/3)
-
-data[which(empty_cells > 1/3),]
-
-### outliers:
-data <- data[-c(35,28),]
-
 
 ### optional: add a person identifier if missing in data
 # data$Subject <- 1:nrow(data)
@@ -125,8 +126,8 @@ MAX_CI_INDIV <- 0.99
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
 
-res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
-                       FUN = mpt_treebugs, 
+res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta"),
+                       mpt_treebugs_safe, 
                        dataset = DATA_FILE, data = data, model = EQN_FILE,
                        col_id = COL_ID, col_condition = COL_CONDITION)
 

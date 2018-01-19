@@ -11,8 +11,7 @@ aggregate_ppp <- function(ppp_list, stat = "T1"){
     stat_df = NA, p = mean(s.obs < s.pred))
 }
 
-
-mpt_treebugs <- function (dataset, data, model, method = "trait",
+mpt_treebugs <- function (method, dataset, data, model,
                           col_id = "id", col_condition = "condition"){
   
   # dlist <- prepare_data(model, data, col_id = "id", col_condition = "condition")
@@ -188,4 +187,5 @@ mpt_treebugs <- function (dataset, data, model, method = "trait",
   result_row
 }
 
-
+mpt_treebugs_safe <- possibly(mpt_treebugs, 
+                              otherwise = list())
