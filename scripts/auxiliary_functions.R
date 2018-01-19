@@ -170,26 +170,29 @@ check_results <- function(results) {
   
   cat("## MPTinR: no pooling\n")
   
-  conv_mptinr_no <- results %>% 
-    filter(package == "MPTinR" & pooling == "no") %>% 
-    select(convergence) %>% 
-    unnest() 
-  
-  not_id <- conv_mptinr_no %>% 
-    group_by(condition) %>% 
-    summarise(proportion = mean(!is.na(parameter)))
-  not_id2 <- conv_mptinr_no %>% 
-    group_by(condition) %>% 
-    summarise(not_identified = list(tidy(table(parameter)))) %>% 
-    unnest()
-  if (any(not_id$proportion > 0)) {
-    cat("Proportion of participants with non-identified parameters:\n")
-    cat(format(not_id)[-c(1,3)], "", sep = "\n")
+  tryCatch({
+    conv_mptinr_no <- results %>% 
+      filter(package == "MPTinR" & pooling == "no") %>% 
+      select(convergence) %>% 
+      unnest() 
     
-    cat("Table of non-identified parameters:\n")
-    cat(format(not_id2)[-c(1,3)], sep = "\n")
-    
-  }
+    not_id <- conv_mptinr_no %>% 
+      group_by(condition) %>% 
+      summarise(proportion = mean(!is.na(parameter)))
+    not_id2 <- conv_mptinr_no %>% 
+      group_by(condition) %>% 
+      summarise(not_identified = list(tidy(table(parameter)))) %>% 
+      unnest()
+    if (any(not_id$proportion > 0)) {
+      cat("Proportion of participants with non-identified parameters:\n")
+      cat(format(not_id)[-c(1,3)], "", sep = "\n")
+      
+      cat("Table of non-identified parameters:\n")
+      cat(format(not_id2)[-c(1,3)], sep = "\n")
+      
+    }
+  }, error = function(e) 
+    cat("Convergence checks failed for unkown reason.\n"))
   
   cat("\n\n")
   
@@ -197,19 +200,22 @@ check_results <- function(results) {
   ### MPTinR: complete pooling ###
   
   cat("## MPTinR: complete pooling\n")
-
-  conv_mptinr_comp <- results %>%
-    filter(package == "MPTinR" & pooling == "complete") %>%
-    select(convergence) %>%
+  
+  tryCatch({
+    conv_mptinr_comp <- results %>%
+      filter(package == "MPTinR" & pooling == "complete") %>%
+      select(convergence) %>%
       unnest()
-  
-  comp_prob <- (conv_mptinr_comp$convergence != 0) | 
-    (conv_mptinr_comp$rank.fisher != conv_mptinr_comp$n.parameters)
-  
-  if (any(comp_prob)) {
-    cat("Convergence problems:\n")
-    cat(format(conv_mptinr_comp[comp_prob,])[-c(1,3)], "", sep = "\n")
-  }
+    
+    comp_prob <- (conv_mptinr_comp$convergence != 0) | 
+      (conv_mptinr_comp$rank.fisher != conv_mptinr_comp$n.parameters)
+    
+    if (any(comp_prob)) {
+      cat("Convergence problems:\n")
+      cat(format(conv_mptinr_comp[comp_prob,])[-c(1,3)], "", sep = "\n")
+    }
+  }, error = function(e) 
+    cat("Convergence checks failed for unkown reason.\n"))
 
   cat("\n\n")
   
