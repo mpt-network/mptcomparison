@@ -33,6 +33,7 @@ library("parallel")
 library("MPTinR")
 library("TreeBUGS")
 library("runjags")
+library("purrr")
 runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 
 # load scripts. make sure that working directory is correct via either:
@@ -112,8 +113,8 @@ MAX_CI_INDIV <- 0.99
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
 
-res_treebugs <- lapply(c("simple", "simple_pooling", "trait", "beta"),
-                       FUN = mpt_treebugs, 
+res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta"),
+                       mpt_treebugs_safe, 
                        dataset = DATA_FILE, data = data, model = EQN_FILE,
                        col_id = COL_ID, col_condition = COL_CONDITION)
 
