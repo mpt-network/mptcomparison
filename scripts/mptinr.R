@@ -13,11 +13,11 @@ mpt_mptinr <- function(dataset,  # name of data file
                             col_condition = col_condition)
   
   bind_rows(
-    # mpt_mptinr_no(dataset = dataset,
-    #               prepared = prepared,
-    #               model = model,
-    #               col_id = col_id,
-    #               col_condition = col_condition),
+    mpt_mptinr_no(dataset = dataset,
+                  prepared = prepared,
+                  model = model,
+                  col_id = col_id,
+                  col_condition = col_condition),
     mpt_mptinr_complete(dataset = dataset,
                   prepared = prepared,
                   model = model,
