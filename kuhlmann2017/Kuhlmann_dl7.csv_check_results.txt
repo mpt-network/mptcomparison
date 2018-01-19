@@ -1,8 +1,10 @@
 ################ OPTIONS ################
 
 TreeBUGS:
-   n.chain     n.iter    n.adapt   n.burnin     n.thin   Rhat_max   Neff_min extend_max      n.PPP       nCPU 
-      4.00   50000.00    3000.00    2000.00      10.00       1.05     100.00      20.00    2000.00       8.00 
+   n.chain     n.iter    n.adapt   n.burnin     n.thin   Rhat_max   Neff_min extend_max 
+      4.00   50000.00    3000.00    2000.00      10.00       1.05     100.00      20.00 
+     n.PPP       nCPU 
+   2000.00       8.00 
 
 MPTinR:
 bootstrap_samples           n.optim              nCPU 
@@ -13,12 +15,16 @@ MAX_CI_INDIV =  0.99
 
 ################ CHECK RESULTS ################
 
-## Following analyses approaches missing from results:
- no, MPTinR, PB/MLE 
-
-
 ## MPTinR: no pooling
-Convergence checks failed for unkown reason.
+Proportion of participants with non-identified parameters:
+  condition proportion
+1 no_load       0.0833
+2 load          0.708 
+
+Table of non-identified parameters:
+  condition parameter  Freq
+1 no_load   g             2
+2 load      d            17
 
 
 ## MPTinR: complete pooling
