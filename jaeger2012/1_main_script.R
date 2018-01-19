@@ -133,11 +133,14 @@ res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta"),
                        col_id = COL_ID, col_condition = COL_CONDITION)
 
 results <- bind_rows(res_mptinr, res_treebugs)
+
+# print results
 check_results(results)
 results
 
-
-# requires a subfolder "/results"
+# store results
 save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
-
-plot_results(results)
+sink(paste0(DATA_FILE, "_check_results.txt"))
+check_results(results)
+sink()
+plot_results(results, save = TRUE)
