@@ -1,28 +1,9 @@
-#############################################
-## Install developer version of TreeBUGS   ##
-#############################################
-
-### the newest TreeBUGS needs to be installed once using one of the following 3 options:
-
-### (A) on Windows:
-# install.packages(c("runjags", "hypergeo","rjags", "logspline","RcppArmadillo"))
-# install.packages("../scripts/TreeBUGS_1.2.0.zip", repos = NULL)
-
-### (B) on Mac:
-# install.packages(c("runjags", "hypergeo","rjags", "logspline","RcppArmadillo"))
-# install.packages("../scripts/TreeBUGS_1.2.0.XXX", repos = NULL)
-
-### (C) compile source package (requires tools for building C++ packages)
-# install.packages(c("devtools", "runjags", "hypergeo","rjags", "logspline","RcppArmadillo"))
-# library("devtools")
-# devtools::install_github("denis-arnold/TreeBUGS")
-
-
 #################################
 ## Load packages and scripts   ##
 #################################
 
-# load packages
+# loading packages
+# => check that the newest versions are installed (especially for TreeBUGS)!
 library("tidyr")
 library("dplyr")
 library("tibble")
