@@ -1,0 +1,23 @@
+## Following analyses approaches missing from results:
+ no, MPTinR, PB/MLE 
+
+
+## MPTinR: no pooling
+Convergence checks failed for unkown reason.
+
+
+## MPTinR: complete pooling
+
+
+## TreeBUGS, no, simple:
+
+
+## TreeBUGS, complete, simple:
+
+
+## TreeBUGS, partial, trait:
+
+
+## TreeBUGS, partial, beta:
+
+
