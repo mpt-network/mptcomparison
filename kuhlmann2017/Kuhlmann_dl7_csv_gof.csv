@@ -1,0 +1,11 @@
+model,dataset,pooling,package,method,type,focus,stat_obs,stat_pred,stat_df,p
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,no,MPTinR,PB/MLE,pb-G2,mean,89.95174525099853,NA,96,0.9201596806387226
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,complete,MPTinR,asymptotic,G2,mean,15.06204782135319,NA,2,5.361889659142298e-4
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,no,TreeBUGS,simple,T1_G2,mean,0.6925584080680743,0.4397170868977367,NA,0.1565
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,no,TreeBUGS,simple,T2,cov,55.40765444586857,47.53707948512768,NA,0.322
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,complete,TreeBUGS,simple,T1_G2,mean,18.94383304194649,12.011302066560557,NA,0.1295
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,complete,TreeBUGS,simple,T2,cov,NA,NA,NA,NA
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,partial,TreeBUGS,trait,T1_G2,mean,0.5483526352535988,0.44596880137429534,NA,0.3185
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,partial,TreeBUGS,trait,T2,cov,45.781356231998764,45.70364737711557,NA,0.498
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,partial,TreeBUGS,beta,T1_G2,mean,0.6664837603017408,0.45289665934347617,NA,0.179
+2HTSM_Submodel4.eqn,Kuhlmann_dl7.csv,partial,TreeBUGS,beta,T2,cov,76.12728026585556,46.37525863068513,NA,0.1175

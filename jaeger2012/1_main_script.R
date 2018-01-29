@@ -15,6 +15,7 @@ library("MPTinR")
 library("TreeBUGS")
 library("runjags")
 library("purrr")
+library("readr")
 library("broom") # for tidy
 runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 

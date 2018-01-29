@@ -1,8 +1,14 @@
 library("ggplot2")
 
-plot_results <- function (results, save = TRUE){
+plot_results <- function (results, save = TRUE, write.csv = TRUE){
   
   prefix <- gsub("\\.", "_", paste0(results$dataset[1],"_"))
+  
+  if (write.csv){
+    write_csv(unnest(results, est_group), paste0(prefix,"estimates.csv"))
+    write_csv(unnest(results, gof), paste0(prefix,"gof.csv"))
+  }
+  
   
   dd <- position_dodge(w = .5)
   gg_est1 <- unnest(results, est_group) %>%
@@ -20,9 +26,11 @@ plot_results <- function (results, save = TRUE){
   
   res_between <-  unnest(results, test_between) 
   if (nrow(res_between) > 0){
+    if (write.csv) write_csv(unnest(results, test_between), paste0(prefix,"test_between.csv"))
+    
     gg_est2 <- ggplot(res_between, aes(y = est_diff, x = parameter, 
-                            col=interaction(method, pooling,package),
-                            shape=interaction(method, pooling,package))) +
+                                       col=interaction(method, pooling,package),
+                                       shape=interaction(method, pooling,package))) +
       facet_grid(condition2~condition1) +
       geom_errorbar(aes(ymin = ci_0.025, ymax = ci_0.975), 
                     position = dd, width = 0.5)+
@@ -47,6 +55,8 @@ plot_results <- function (results, save = TRUE){
   
   
   if (nrow(res_between) > 0){
+    if (write.csv) write_csv(unnest(results, gof_group), paste0(prefix,"gof_group.csv"))
+    
     gg_gof2 <- unnest(results, gof_group) %>%
       ggplot(aes(y = p, 
                  x = interaction(method, pooling, package), 
@@ -61,3 +71,4 @@ plot_results <- function (results, save = TRUE){
     if(save) ggsave(paste0(prefix,"gof_group.pdf"), gg_gof2, h = 4, w = 5)
   }
 }
+

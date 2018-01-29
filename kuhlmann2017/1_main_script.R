@@ -16,6 +16,7 @@ library("TreeBUGS")
 library("runjags")
 library("purrr")
 library("broom")
+library("readr")
 runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 
 # load scripts. make sure that working directory is correct via either:
