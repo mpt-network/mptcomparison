@@ -18,6 +18,10 @@ no, partial).
     3. The file `1_main_script.R`(copied from one of the example subfolders). 
 3. Adjust the input options in `1_main_script.R` in the section 
    "MPT model definition & Data".
+    * Note that the script requires two auxiliary variables: 
+      a person-ID variable and a dummy variable encoding between-subject membership.
+      If your data contain response frequencies only, uncomment the optional 
+      lines in the script to add these two variables manually.
 4. Install the newest versions of all packages that are listed on top of the main script.
     * Note: The latest of TreeBUGS is required.
 5. Set the working directory to your subfolder
@@ -26,8 +30,10 @@ no, partial).
 6. Run the main script
     * Note: For testing purposes, MCMC and bootstrap options can be changed under "Settings"
 7. The script will save an `.RData` file with results and a few summary plots. 
-   Additionally, a few convergence checks will be printed to a text file.
-
+    * Additionally, a few convergence checks will be printed to a text file.
+      For instance, for MCMC output, all parameters with `Rhat > 1.05` or `n.eff < 100` are listed.
+    * Note: The goodness-of-fit plots show the T1 and T2 statistics for MCMC fits 
+      (labels: "mean" and "cov", respectively).
 
 ## Example Data Sets
 

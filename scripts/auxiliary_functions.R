@@ -190,6 +190,8 @@ check_results <- function(results) {
       cat("Table of non-identified parameters:\n")
       cat(format(not_id2)[-c(1,3)], sep = "\n")
       
+    } else {
+      cat("All parameters of all participants seem to be identifiable.\n")
     }
   }, error = function(e) 
     cat("Convergence checks failed for unkown reason.\n"))
@@ -213,6 +215,8 @@ check_results <- function(results) {
     if (any(comp_prob)) {
       cat("Convergence problems:\n")
       cat(format(conv_mptinr_comp[comp_prob,])[-c(1,3)], "", sep = "\n")
+    } else {
+      cat("No convergence problems.\n")
     }
   }, error = function(e) 
     cat("Convergence checks failed for unkown reason.\n"))
@@ -228,11 +232,24 @@ check_results <- function(results) {
     cat("## ", paste(res_tree[i, c(2,1,3)], collapse = ", "), ":\n", sep = "")
     
     tmp_convergence <- res_tree[i,]$convergence[[1]] %>% 
-      filter(Rhat > 1.05) 
+      filter(Rhat > TREEBUGS_MCMC["Rhat_max"]) 
     
     if(nrow(tmp_convergence) > 0) {
-      cat(nrow(tmp_convergence), "parameters with Rhat > 1.05:\n")
+      cat(nrow(tmp_convergence), "parameters with Rhat >", TREEBUGS_MCMC["Rhat_max"], ":\n")
       cat(paste(tmp_convergence$parameter, collapse = ", "))
+    } else {
+      cat("All Rhat <", TREEBUGS_MCMC["Rhat_max"], ".\n")
+    }
+    
+    tmp_neff <- res_tree[i,]$convergence[[1]] %>% 
+      dplyr::filter(!is.na(Rhat), n.eff < TREEBUGS_MCMC["Neff_min"])
+    
+    if(nrow(tmp_neff) > 0) {
+      cat(nrow(tmp_neff), "parameters with effect sample size n.eff <", 
+          TREEBUGS_MCMC["Neff_min"], ":\n")
+      cat(paste(tmp_neff$parameter, collapse = ", "))
+    } else {
+      cat("All effect sample sizes >", TREEBUGS_MCMC["Neff_min"], ".\n")
     }
     
     cat("\n\n")

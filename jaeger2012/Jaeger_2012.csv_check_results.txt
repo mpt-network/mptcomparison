@@ -35,16 +35,22 @@ Table of non-identified parameters:
 
 
 ## MPTinR: complete pooling
+No convergence problems.
 
 
 ## TreeBUGS, no, simple:
-161 parameters with Rhat > 1.05:
-mean[1], mean[2], mean[3], mean[4], mean[5], mean[8], mean[9], sd[2], sd[3], sd[4], sd[5], sd[8], sd[9], theta[1,4], theta[1,10], theta[1,11], theta[1,30], theta[1,33], theta[1,34], theta[1,41], theta[1,49], theta[1,56], theta[1,62], theta[2,4], theta[2,6], theta[2,10], theta[2,11], theta[2,30], theta[2,33], theta[2,34], theta[2,41], theta[2,49], theta[2,56], theta[2,62], theta[3,4], theta[3,10], theta[3,11], theta[3,30], theta[3,33], theta[3,34], theta[3,41], theta[3,49], theta[3,56], theta[3,62], theta[4,4], theta[4,6], theta[4,10], theta[4,11], theta[4,30], theta[4,33], theta[4,34], theta[4,41], theta[4,49], theta[4,56], theta[5,4], theta[5,6], theta[5,10], theta[5,11], theta[5,30], theta[5,33], theta[5,34], theta[5,41], theta[5,49], theta[5,56], theta[5,62], theta[6,4], theta[6,10], theta[6,11], theta[6,30], theta[6,33], theta[6,34], theta[6,56], theta[7,4], theta[7,10], theta[7,11], theta[7,30], theta[7,33], theta[7,34], theta[7,41], theta[7,49], theta[7,56], theta[8,4], theta[8,10], theta[8,11], theta[8,30], theta[8,33], theta[8,34], theta[8,41], theta[8,49], theta[8,56], theta[9,4], theta[9,10], theta[9,11], theta[9,30], theta[9,33], theta[9,34], theta[9,41], theta[9,49], theta[9,56], rho[2,1], rho[3,1], rho[4,1], rho[5,1], rho[6,1], rho[7,1], rho[9,1], rho[1,2], rho[3,2], rho[4,2], rho[5,2], rho[6,2], rho[7,2], rho[9,2], rho[1,3], rho[2,3], rho[4,3], rho[5,3], rho[6,3], rho[7,3], rho[8,3], rho[9,3], rho[1,4], rho[2,4], rho[3,4], rho[5,4], rho[6,4], rho[7,4], rho[8,4], rho[9,4], rho[1,5], rho[2,5], rho[3,5], rho[4,5], rho[6,5], rho[7,5], rho[9,5], rho[1,6], rho[2,6], rho[3,6], rho[4,6], rho[5,6], rho[8,6], rho[9,6], rho[1,7], rho[2,7], rho[3,7], rho[4,7], rho[5,7], rho[8,7], rho[9,7], rho[3,8], rho[4,8], rho[6,8], rho[7,8], rho[1,9], rho[2,9], rho[3,9], rho[4,9], rho[5,9], rho[6,9], rho[7,9]
+161 parameters with Rhat > 1.05 :
+mean[1], mean[2], mean[3], mean[4], mean[5], mean[8], mean[9], sd[2], sd[3], sd[4], sd[5], sd[8], sd[9], theta[1,4], theta[1,10], theta[1,11], theta[1,30], theta[1,33], theta[1,34], theta[1,41], theta[1,49], theta[1,56], theta[1,62], theta[2,4], theta[2,6], theta[2,10], theta[2,11], theta[2,30], theta[2,33], theta[2,34], theta[2,41], theta[2,49], theta[2,56], theta[2,62], theta[3,4], theta[3,10], theta[3,11], theta[3,30], theta[3,33], theta[3,34], theta[3,41], theta[3,49], theta[3,56], theta[3,62], theta[4,4], theta[4,6], theta[4,10], theta[4,11], theta[4,30], theta[4,33], theta[4,34], theta[4,41], theta[4,49], theta[4,56], theta[5,4], theta[5,6], theta[5,10], theta[5,11], theta[5,30], theta[5,33], theta[5,34], theta[5,41], theta[5,49], theta[5,56], theta[5,62], theta[6,4], theta[6,10], theta[6,11], theta[6,30], theta[6,33], theta[6,34], theta[6,56], theta[7,4], theta[7,10], theta[7,11], theta[7,30], theta[7,33], theta[7,34], theta[7,41], theta[7,49], theta[7,56], theta[8,4], theta[8,10], theta[8,11], theta[8,30], theta[8,33], theta[8,34], theta[8,41], theta[8,49], theta[8,56], theta[9,4], theta[9,10], theta[9,11], theta[9,30], theta[9,33], theta[9,34], theta[9,41], theta[9,49], theta[9,56], rho[2,1], rho[3,1], rho[4,1], rho[5,1], rho[6,1], rho[7,1], rho[9,1], rho[1,2], rho[3,2], rho[4,2], rho[5,2], rho[6,2], rho[7,2], rho[9,2], rho[1,3], rho[2,3], rho[4,3], rho[5,3], rho[6,3], rho[7,3], rho[8,3], rho[9,3], rho[1,4], rho[2,4], rho[3,4], rho[5,4], rho[6,4], rho[7,4], rho[8,4], rho[9,4], rho[1,5], rho[2,5], rho[3,5], rho[4,5], rho[6,5], rho[7,5], rho[9,5], rho[1,6], rho[2,6], rho[3,6], rho[4,6], rho[5,6], rho[8,6], rho[9,6], rho[1,7], rho[2,7], rho[3,7], rho[4,7], rho[5,7], rho[8,7], rho[9,7], rho[3,8], rho[4,8], rho[6,8], rho[7,8], rho[1,9], rho[2,9], rho[3,9], rho[4,9], rho[5,9], rho[6,9], rho[7,9]4 parameters with effect sample size n.eff < 100 :
+theta[1,62], theta[2,62], theta[3,62], theta[5,62]
 
 ## TreeBUGS, complete, simple:
+All Rhat < 1.05 .
+All effect sample sizes > 100 .
 
 
 ## TreeBUGS, partial, trait:
+All Rhat < 1.05 .
+All effect sample sizes > 100 .
 
 
 NULL

@@ -39,15 +39,17 @@ DATA_FILE <- "Kuhlmann_dl7.csv"
 data <- read.csv2(DATA_FILE, fileEncoding = "UTF-8-BOM")
 ### if .csv format uses commata "," (international format)
 # data <- read.csv(DATA_FILE, fileEncoding = "UTF-8-BOM")
+
 head(data)
 plotFreq(data, boxplot = FALSE, eqn = "2HTSM_Submodel4.eqn")
 
-
-### optional: add a person identifier if missing in data
+### Optional:
+### (A) add a person identifier if missing in data [uncomment if necessary]
 # data$Subject <- 1:nrow(data)
-### optional: add a dummy variable if data do not contain a between-subject factor
-# data$ExpCond <- "no_condition"
 
+### Optional:
+### (B) add a dummy variable if data do not contain a between-subject factor  [uncomment if necessary]
+# data$ExpCond <- "no_condition"
 
 COL_ID <- "Subject"         # name of the variable encoding subject ID
 COL_CONDITION <- "ExpCond"  # name of the variable encoding group membership
@@ -107,6 +109,8 @@ check_results(results)
 results
 
 # store results
-save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
+save(results, data,
+     EQN_FILE, DATA_FILE, TREEBUGS_MCMC, MPTINR_OPTIONS, CI_SIZE, MAX_CI_INDIV,
+     file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
 write_check_results(DATA_FILE, results)
 plot_results(results, save = TRUE)

@@ -57,10 +57,13 @@ empty_cells
 
 which(empty_cells > 1/3)
 
-### optional: add a person identifier if missing in data
-# data$Subject <- 1:nrow(data)
-### optional: add a dummy variable if data do not contain a between-subject factor
-# data$ExpCond <- "no_condition"
+### Optional:
+### (A) add a person identifier if missing in data [uncomment if necessary]
+# data$id <- 1:nrow(data)
+
+### Optional:
+### (B) add a dummy variable if data do not contain a between-subject factor  [uncomment if necessary]
+# data$exp <- "no_condition"
 
 
 COL_ID <- "id"         # name of the variable encoding subject ID
@@ -120,6 +123,8 @@ check_results(results)
 results
 
 # store results
-save(results, file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
+save(results, data,
+     EQN_FILE, DATA_FILE, TREEBUGS_MCMC, MPTINR_OPTIONS, CI_SIZE, MAX_CI_INDIV,
+     file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
 write_check_results(DATA_FILE, results)
 plot_results(results, save = TRUE)
