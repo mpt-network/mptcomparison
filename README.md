@@ -9,7 +9,7 @@ no, partial).
 1. Download or clone all material from GitHub 
    (e.g., via the green button "Download" on the top right) 
 2. Create a new subfolder that contains the following three files
-   (cf. the example subfolders `kuhlmann2017/` and `jaeger2012/`):
+   (cf. the example subfolders `bayen-kuhlmann2011/` and `jaeger2012/`):
     1. The MPT model in the .eqn-format
         * The model should be parameterized including all equality constraints.
         * To encode fixed parameters (e.g., g=.50), replace the parameter 
@@ -39,9 +39,9 @@ no, partial).
 
 Currently, the project contains two example models and data sets:
 
-1. `kuhlmann2017` contains a restricted version (submodel 4) of the 2HT source memory model from Bayen, Murnane, Erfelder (1996) and data from Kuhlmann & Touron (2017). The data has two conditions (younger and older adults). The model appears to fit the data quite well (maybe with the exception of the complete pooling MPTinR approach).
+1. `bayen-kuhlmann2011` contains a restricted version (submodel 4) of the 2HT source memory model from Bayen, Murnane, and Erfelder (1996) and data from Bazen and Kuhlmann (2011). The data has two conditions (no oad versus load). The model appears to fit the data quite well (maybe with the exception of the complete pooling MPTinR approach).
 
-2. `jaeger201` contains two versions of the 2HT recognition memory model for 6-point ROC data and the data from Jaeger, Cox, and Dobbins (2012). The currently selected model has a symmetric response mapping for detection states and a completely unrestricted response mapping for uncertainty (i.e., guessing) states. The data only has one condition. The model does not appear to fit the data. Furthermore, there are quite some convergence issues. Especially the Bayesian variants appear unable to convergence on the target distribution. Furthermore, the beta MPT fails completely. This suggests that a different model (i.e., other parameter restrictions) need to be chosen. However, removing a few problematic participants also seems to remove the problems.
+2. `jaeger2012` contains two versions of the 2HT recognition memory model for 6-point ROC data and the data from Jaeger, Cox, and Dobbins (2012). The currently selected model has a symmetric response mapping for detection states and a completely unrestricted response mapping for uncertainty (i.e., guessing) states. The data only has one condition. The model does not appear to fit the data. Furthermore, there are quite some convergence issues. Especially the Bayesian variants appear unable to convergence on the target distribution. Furthermore, the beta MPT fails completely. This suggests that a different model (i.e., other parameter restrictions) need to be chosen. However, removing a few problematic participants also seems to remove the problems.
 
 ## Current limitations
 
