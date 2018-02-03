@@ -1,9 +1,10 @@
 model,dataset,pooling,package,method,type,focus,stat_obs,stat_pred,stat_df,p
-2htm.eqn,Jaeger_2012.csv,no,MPTinR,PB/MLE,pb-G2,mean,84.882291563173,NA,63,0.0499001996007984
+2htm.eqn,Jaeger_2012.csv,no,MPTinR,PB/MLE,pb-G2,mean,84.9884422816221,NA,63,0.05588822355289421
+2htm.eqn,Jaeger_2012.csv,no,MPTinR,asymptotic,G2,mean,84.9884422816221,NA,63,0.03389947204716807
 2htm.eqn,Jaeger_2012.csv,complete,MPTinR,asymptotic,G2,mean,17.813221570384485,NA,1,2.4368403390614238e-5
-2htm.eqn,Jaeger_2012.csv,no,TreeBUGS,simple,T1_G2,mean,0.7883930838552565,0.13913839368693615,NA,0
-2htm.eqn,Jaeger_2012.csv,no,TreeBUGS,simple,T2,cov,62.81465512960579,29.496641540802184,NA,0.0065
-2htm.eqn,Jaeger_2012.csv,complete,TreeBUGS,simple,T1_G2,mean,26.998896269236052,10.177040030669968,NA,0.0075
+2htm.eqn,Jaeger_2012.csv,no,TreeBUGS,simple,T1_G2,mean,0.7375935274102778,0.14093857475930885,NA,5e-4
+2htm.eqn,Jaeger_2012.csv,no,TreeBUGS,simple,T2,cov,61.432246105862625,29.37257850966003,NA,0.0125
+2htm.eqn,Jaeger_2012.csv,complete,TreeBUGS,simple,T1_G2,mean,26.98324123941492,10.048105691015603,NA,0.006
 2htm.eqn,Jaeger_2012.csv,complete,TreeBUGS,simple,T2,cov,NA,NA,NA,NA
-2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait,T1_G2,mean,0.30889874689602853,0.1402003885259114,NA,0.0455
-2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait,T2,cov,39.3709554440705,29.606980867239773,NA,0.201
+2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait,T1_G2,mean,0.4202305309897153,0.13985919633351415,NA,0.0365
+2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait,T2,cov,43.29981519096349,29.033118005202475,NA,0.1495
