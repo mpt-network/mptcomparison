@@ -441,6 +441,23 @@ mpt_mptinr_complete <- function(dataset,
       qnorm(CI_SIZE[i])*complete_pooling$est_group[[1]][,"se"]
   }
   
+  ### test between ###
+  tmp_pars <- complete_pooling$est_group[[1]]
+  
+  for (i in seq_len(nrow(complete_pooling$test_between[[1]]))) {
+    
+    tmp_par <- complete_pooling$test_between[[1]]$parameter[i]
+    tmp_c1 <- complete_pooling$test_between[[1]]$condition1[i]
+    tmp_c2 <- complete_pooling$test_between[[1]]$condition2[i]
+  
+    complete_pooling$test_between[[1]][i, "est_diff"] <- 
+      tmp_pars[tmp_pars$condition == tmp_c1 & 
+               tmp_pars$parameter == tmp_par, ]$est -
+      tmp_pars[tmp_pars$condition == tmp_c2 & 
+               tmp_pars$parameter == tmp_par, ]$est
+    
+  }
+  
   tmp <- names(convergence)
   convergence <- do.call("rbind", convergence)
   convergence <- bind_cols(condition = factor(tmp), 
