@@ -2,6 +2,8 @@ library("ggplot2")
 
 plot_results <- function (results, save = TRUE, write.csv = TRUE){
   
+  shapes <- c(16, 18, 15, 1, 0, 8, 11, 12)
+  
   prefix <- gsub("\\.", "_", paste0(results$dataset[1],"_"))
   
   if (write.csv){
@@ -10,7 +12,7 @@ plot_results <- function (results, save = TRUE, write.csv = TRUE){
   }
   
   
-  dd <- position_dodge(w = .5)
+  dd <- position_dodge(w = .75)
   gg_est1 <- unnest(results, est_group) %>%
     ggplot(aes(y = est, x = parameter, 
                col=interaction(method, pooling,package),
@@ -19,6 +21,7 @@ plot_results <- function (results, save = TRUE, write.csv = TRUE){
     geom_errorbar(aes(ymin = est-se, ymax = est+se), position = dd, 
                   width = 0.4)+
     geom_point(position = dd) + ylim(0,1) + 
+    scale_shape_manual(values=shapes) +
     theme_bw()
   plot(gg_est1)
   if(save) ggsave(paste0(prefix,"estimates.pdf"), gg_est1, h = 4.5, w = 10)
@@ -35,6 +38,7 @@ plot_results <- function (results, save = TRUE, write.csv = TRUE){
       geom_errorbar(aes(ymin = ci_0.025, ymax = ci_0.975), 
                     position = dd, width = 0.5)+
       geom_point(position = dd) + ylim(-1,1) + 
+      scale_shape_manual(values=shapes) +
       theme_bw() + geom_hline(yintercept = 0, lty = 2)
     plot(gg_est2)
     if(save) ggsave(paste0(prefix,"test_between.pdf"), gg_est2, h = 4.5, w = 8)
@@ -68,7 +72,7 @@ plot_results <- function (results, save = TRUE, write.csv = TRUE){
       facet_wrap(~focus) +
       ggtitle("Goodness of fit")
     plot(gg_gof2)
-    if(save) ggsave(paste0(prefix,"gof_group.pdf"), gg_gof2, h = 4, w = 5)
+    if(save) ggsave(paste0(prefix,"gof_group.pdf"), gg_gof2, h = 4, w = 8)
   }
 }
 
