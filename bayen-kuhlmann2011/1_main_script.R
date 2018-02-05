@@ -98,7 +98,7 @@ MAX_CI_INDIV <- 0.99
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
 
-res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta"),
+res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta", "trait_uncorrelated"),
                     mpt_treebugs_safe, 
                     dataset = DATA_FILE, data = data, model = EQN_FILE,
                     col_id = COL_ID, col_condition = COL_CONDITION)

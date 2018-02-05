@@ -34,15 +34,19 @@ mpt_treebugs <- function (method, dataset, data, model,
                                  data = data,
                                  parameters = parameters)
   if (method == "simple_pooling"){
-    # result_row$method <- 
     method <- "simple"
-    result_row$pooling <- "complete"
     
     # pooling: aggregate across participants
     data <- aggregate(data[,col_freq], list(condition = data$condition), sum)
     data[[col_condition]] <- data$condition
     data[[col_id]] <- data$id <- 1:nrow(data)
     freq_list <- lapply(freq_list, function(x) as.matrix(colSums(x)))
+  } 
+  if (method == "trait_uncorrelated"){
+    method <- "trait"
+    prior_args <- list(df = 1, V = NA, xi = "dnorm(0,1)")
+  } else {
+    prior_args <- NULL
   }
   
   gof_group <- list()
@@ -64,8 +68,8 @@ mpt_treebugs <- function (method, dataset, data, model,
       fit_args["n.adapt"] <- NULL
       fit_args <- c(fit_args, cores = unname(TREEBUGS_MCMC["nCPU"]))
     }
-    treebugs_fit[[i]] <- do.call(paste0(method, "MPT"), args = fit_args)
-    summ <- treebugs_fit[[i]]$mcmc.summ #summarizeMCMC(treebugs_fit[[i]]$runjags$mcmc)
+    treebugs_fit[[i]] <- do.call(paste0(method, "MPT"), args = c(fit_args, prior_args))
+    summ <- treebugs_fit[[i]]$mcmc.summ
     
     # continue MCMC sampling (only for betaMPT and traitMPT)
     ext_cnt <- 0

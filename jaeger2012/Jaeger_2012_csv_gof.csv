@@ -8,3 +8,5 @@ model,dataset,pooling,package,method,type,focus,stat_obs,stat_pred,stat_df,p
 2htm.eqn,Jaeger_2012.csv,complete,TreeBUGS,simple,T2,cov,NA,NA,NA,NA
 2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait,T1_G2,mean,0.4202305309897153,0.13985919633351415,NA,0.0365
 2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait,T2,cov,43.29981519096349,29.033118005202475,NA,0.1495
+2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait_uncorrelated,T1_G2,mean,0.3394119501282331,0.14255815807293654,NA,0.035
+2htm.eqn,Jaeger_2012.csv,partial,TreeBUGS,trait_uncorrelated,T2,cov,60.02291322670476,29.691210481508715,NA,0.0185
