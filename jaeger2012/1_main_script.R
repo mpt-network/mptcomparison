@@ -119,9 +119,8 @@ res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta", "trait_uncorr
 
 results <- bind_rows(res_mptinr, res_treebugs)
 
-# print results
+# print convergence results
 check_results(results)
-results
 
 # store results
 save(results, data,
