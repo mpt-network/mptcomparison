@@ -42,7 +42,7 @@ data <- read.csv2(DATA_FILE, fileEncoding = "UTF-8-BOM")
 # data <- read.csv(DATA_FILE, fileEncoding = "UTF-8-BOM")
 
 head(data)
-plotFreq(data, boxplot = FALSE, eqn = "2HTSM_Submodel4.eqn")
+plotFreq(data, boxplot = FALSE, eqn = EQN_FILE)
 
 ### Optional:
 ### (A) add a person identifier if missing in data [uncomment if necessary]
