@@ -154,9 +154,9 @@ get_eqn_categories <- function (model.filename)
 check_results <- function(results) {
   #browser()
   expected <- structure(list(
-    pooling = c("no", "complete", "no", "complete", "partial", "partial", "partial"), 
-    package = c("MPTinR", "MPTinR", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TREEBUGS"), 
-    method = c("PB/MLE", "asymptotic", "simple", "simple", "trait", "beta", "trait_uncorrelated")), 
+    pooling = c("no", "no", "complete", "no", "complete", "partial", "partial", "partial"), 
+    package = c("MPTinR", "MPTinR", "MPTinR", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TREEBUGS"), 
+    method = c("PB/MLE", "asymptotic", "asymptotic", "simple", "simple", "trait", "beta", "trait_uncorrelated")), 
     .Names = c("pooling", "package", "method"), 
     class = c("tbl_df", "tbl", "data.frame"
     ), row.names = c(NA, -6L))
@@ -180,10 +180,10 @@ check_results <- function(results) {
     not_id <- conv_mptinr_no %>% 
       group_by(condition) %>% 
       summarise(proportion = mean(!is.na(parameter)))
-    not_id2 <- conv_mptinr_no %>% 
+    not_id2 <- suppressWarnings(conv_mptinr_no %>% 
       group_by(condition) %>% 
       summarise(not_identified = list(tidy(table(parameter)))) %>% 
-      unnest()
+      unnest(not_identified)) 
     if (any(not_id$proportion > 0)) {
       cat("Proportion of participants with non-identified parameters:\n")
       cat(format(not_id)[-c(1,3)], "", sep = "\n")

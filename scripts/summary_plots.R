@@ -55,7 +55,7 @@ plot_results <- function (results, save = TRUE, write.csv = TRUE){
     facet_wrap(~focus) +
     ggtitle("Goodness of fit")
   plot(gg_gof1)
-  if(save) ggsave(paste0(prefix,"gof.pdf"), gg_gof1, h = 4, w = 5)
+  if(save) ggsave(paste0(prefix,"gof.pdf"), gg_gof1, h = 4, w = 6)
   
   
   if (nrow(res_between) > 0){
