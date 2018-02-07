@@ -69,16 +69,18 @@ head(data)
 ## Settings                    ##
 #################################
 
+AVAILABLE_CORES <- 4  # Set the number of CPU cores that are available on your computer.
+# most modern computers have at least 4. It is not recommended to set higher numbers than available.
 
 TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 50000, n.adapt = 3000, 
                    n.burnin = 2000, n.thin = 10,
                    # = stopping criteria for MCMC:
                    Rhat_max = 1.05, Neff_min = 100, extend_max = 20,
-                   n.PPP = 2000, nCPU = 8)
+                   n.PPP = 2000, nCPU = AVAILABLE_CORES)
 
 MPTINR_OPTIONS <- c(bootstrap_samples = 500,
                     n.optim = 10,
-                    nCPU = 8)
+                    nCPU = AVAILABLE_CORES)
 
 CI_SIZE <- c(0.025, 0.1, 0.9, 0.975)
 MAX_CI_INDIV <- 0.99
