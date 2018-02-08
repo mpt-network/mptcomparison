@@ -15,6 +15,10 @@ MAX_CI_INDIV =  0.99
 
 ################ CHECK RESULTS ################
 
+## Following analyses approaches missing from results:
+ partial, TreeBUGS, beta 
+
+
 ## MPTinR: no pooling
 Proportion of participants with non-identified parameters:
   condition   proportion
