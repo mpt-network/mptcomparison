@@ -23,17 +23,19 @@ no, partial).
       If your data contain response frequencies only, uncomment the optional 
       lines in the script to add these two variables manually.
 4. Install the newest versions of all packages that are listed on top of the main script.
-    * Note: The latest of TreeBUGS is required.
+    * Note: The latest version of TreeBUGS is required.
 5. Set the working directory to your subfolder
     1. Use `setwd()`
     1. in Rstudio:  Rstudio->Sessions->Set Working Directory->'To Source File Location'
 6. Run the main script
     * Note: For testing purposes, MCMC and bootstrap options can be changed under "Settings"
+    * The default setting is to use 4 cores to speed up the calculation. If your computer has more than 4 cores available change the variable `AVAILABLE_CORES` accordingly.
 7. The script will save an `.RData` file with results and a few summary plots. 
     * Additionally, a few convergence checks will be printed to a text file.
       For instance, for MCMC output, all parameters with `Rhat > 1.05` or `n.eff < 100` are listed.
     * Note: The goodness-of-fit plots show the T1 and T2 statistics for MCMC fits 
       (labels: "mean" and "cov", respectively).
+8. The script collects all results in one `data.frame` called `results` in which each method occupies one row. Besides the columns containing identifying information for the method, columns are [`list`-columns](http://r4ds.had.co.nz/many-models.html#list-columns-1). This means that the individual cells do not contain individual scalar values, but `data.frame`s themselves. This allows a convenient structure for the whole `data.frame`, but makes inspection of the individual values somewhat more cumbersome. If one is interested in comparing specific results across methods, `unnest(results, column_name)` creates the more usual `data.frame` for the specified column name (e.g., `unnest(results, est_group)`) . In the resulting `data.frame` each method occupies as many rows as there were in the nested `data.frame` for this method. Use `glimpse(results)` to get an overview over the columns. Note, that this step is necessary, the main results are saved as `.csv` files.
 
 ## Example Data Sets
 
