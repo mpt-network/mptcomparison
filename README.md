@@ -52,3 +52,6 @@ Currently, the project contains two example models and data sets:
   This might be addressed in future versions of TreeBUGS. 
   As a remedy, the number of MCMC iterations can be increased a priori.
 
+---
+
+All code in this repository is released under the [GPL v2 or later license](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html). All non-code materials is released under the [CC-BY-SA license](https://creativecommons.org/licenses/by-sa/4.0/).
