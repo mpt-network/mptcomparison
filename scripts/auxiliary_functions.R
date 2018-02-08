@@ -155,11 +155,11 @@ check_results <- function(results) {
   #browser()
   expected <- structure(list(
     pooling = c("no", "no", "complete", "no", "complete", "partial", "partial", "partial"), 
-    package = c("MPTinR", "MPTinR", "MPTinR", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TREEBUGS"), 
+    package = c("MPTinR", "MPTinR", "MPTinR", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TreeBUGS", "TreeBUGS"), 
     method = c("PB/MLE", "asymptotic", "asymptotic", "simple", "simple", "trait", "beta", "trait_uncorrelated")), 
     .Names = c("pooling", "package", "method"), 
     class = c("tbl_df", "tbl", "data.frame"
-    ), row.names = c(NA, -6L))
+    ), row.names = c(NA, -8L))
   missing <- anti_join(expected, results[,3:5], by = c("pooling", "package", "method"))
   if (nrow(missing) > 0) {
     cat("## Following analyses approaches missing from results:\n", 
