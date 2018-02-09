@@ -114,5 +114,5 @@ check_results(results)
 save(results, data,
      EQN_FILE, DATA_FILE, TREEBUGS_MCMC, MPTINR_OPTIONS, CI_SIZE, MAX_CI_INDIV,
      file = paste0(EQN_FILE, "-", DATA_FILE, ".RData"))
-write_check_results(DATA_FILE, results)
+write_check_results(paste0(EQN_FILE, "-", DATA_FILE), results)
 plot_results(results, save = TRUE)

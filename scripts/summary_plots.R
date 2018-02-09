@@ -3,8 +3,9 @@ library("ggplot2")
 plot_results <- function (results, save = TRUE, write.csv = TRUE){
   
   shapes <- c(16, 18, 15, 1, 0, 8, 11, 12)
-  
-  prefix <- gsub("\\.", "_", paste0(results$dataset[1],"_"))
+
+  prefix <- paste0(gsub("\\.eqn", "", results$model[1]), "_", 
+                            gsub("\\.", "_", paste0(results$dataset[1],"_")))
   
   if (write.csv){
     write_csv(unnest(results, est_group), paste0(prefix,"estimates.csv"))
