@@ -40,6 +40,10 @@ mpt_treebugs <- function (method, dataset, data, model,
     data <- aggregate(data[,col_freq], list(condition = data$condition), sum)
     data[[col_condition]] <- data$condition
     data[[col_id]] <- data$id <- 1:nrow(data)
+    if(col_condition!="condition"){
+      data$condition <- NULL
+    }
+    
     freq_list <- lapply(freq_list, function(x) as.matrix(colSums(x)))
   } 
   if (method == "trait_uncorrelated"){
