@@ -1,14 +1,14 @@
 ################ OPTIONS ################
 
 TreeBUGS:
-   n.chain     n.iter    n.adapt   n.burnin     n.thin   Rhat_max   Neff_min extend_max      n.PPP 
-      4.00   50000.00    3000.00    2000.00      10.00       1.05     100.00      20.00    2000.00 
-      nCPU 
-      6.00 
+   n.chain     n.iter    n.adapt   n.burnin     n.thin   Rhat_max   Neff_min 
+      4.00   50000.00    3000.00    2000.00      10.00       1.05     100.00 
+extend_max      n.PPP       nCPU 
+     20.00    2000.00       4.00 
 
 MPTinR:
 bootstrap_samples           n.optim              nCPU 
-              500                10                 6 
+              500                10                 4 
 
 CI_SIZE:  0.025 0.1 0.9 0.975 
 MAX_CI_INDIV =  0.99 
@@ -18,14 +18,13 @@ MAX_CI_INDIV =  0.99
 ## MPTinR: no pooling
 Proportion of participants with non-identified parameters:
   condition proportion
-1 no_load        0.125
-2 load           0.667
+1 no_load       0.0833
+2 load          0.667 
 
 Table of non-identified parameters:
   condition parameter  Freq
-1 no_load   d             2
-2 no_load   g             4
-3 load      d            32
+1 no_load   g             4
+2 load      d            32
 
 
 ## MPTinR: complete pooling
