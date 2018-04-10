@@ -172,27 +172,30 @@ check_results <- function(results) {
   cat("## MPTinR: no pooling\n")
   
   tryCatch({
-    conv_mptinr_no <- results %>% 
-      filter(package == "MPTinR" & pooling == "no") %>% 
-      select(convergence) %>% 
-      unnest() 
+    for(meth in c("asymptotic", "PB/MLE")){
     
-    not_id <- conv_mptinr_no %>% 
-      group_by(condition) %>% 
-      summarise(proportion = mean(!is.na(parameter)))
-    not_id2 <- suppressWarnings(conv_mptinr_no %>% 
-      group_by(condition) %>% 
-      summarise(not_identified = list(tidy(table(parameter)))) %>% 
-      unnest(not_identified)) 
-    if (any(not_id$proportion > 0)) {
-      cat("Proportion of participants with non-identified parameters:\n")
-      cat(format(not_id)[-c(1,3)], "", sep = "\n")
+      conv_mptinr_no <- results %>% 
+        filter(package == "MPTinR" & pooling == "no" & method == meth) %>% 
+        select(convergence) %>% 
+        unnest() 
       
-      cat("Table of non-identified parameters:\n")
-      cat(format(not_id2)[-c(1,3)], sep = "\n")
-      
-    } else {
-      cat("All parameters of all participants seem to be identifiable.\n")
+      not_id <- conv_mptinr_no %>% 
+        group_by(condition) %>% 
+        summarise(proportion = mean(!is.na(parameter)))
+      not_id2 <- suppressWarnings(conv_mptinr_no %>% 
+        group_by(condition) %>% 
+        summarise(not_identified = list(tidy(table(parameter)))) %>% 
+        unnest(not_identified)) 
+      if (any(not_id$proportion > 0)) {
+        cat("Based on", meth, "CIs, proportion of participants with non-identified parameters:\n")
+        cat(format(not_id)[-c(1,3)], "", sep = "\n")
+        
+        cat("Based on", meth, "CIs, table of non-identified parameters:\n")
+        cat(format(not_id2)[-c(1,3)], sep = "\n")
+        
+      } else {
+        cat("Based on", meth, "CIs, all parameters of all participants seem to be identifiable.\n")
+      }
     }
   }, error = function(e) 
     cat("Convergence checks failed for unkown reason.\n"))
