@@ -37,6 +37,8 @@ mpt_mptinr_no <- function(dataset,
                           model,
                           col_id, 
                           col_condition) {
+  cat_method("MPTinR - no pooling")
+  
   cl <- makeCluster(rep("localhost", MPTINR_OPTIONS["nCPU"])) # make cluster
   clusterEvalQ(cl, library("MPTinR"))
   
@@ -345,6 +347,8 @@ mpt_mptinr_complete <- function(dataset,
                                 model,
                                 col_id, 
                                 col_condition) {
+  
+  cat_method("MPTinR - complete pooling")
   
   complete_pooling <- make_results_row(model = model,
                                        dataset = dataset,

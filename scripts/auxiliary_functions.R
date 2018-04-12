@@ -274,3 +274,10 @@ write_check_results <- function(DATA_FILE, results){
   print(check_results(results))
   sink()
 }
+
+
+cat_method <- function(method){
+  cat(" ######################################################\n",
+      "############## ", method, "\n",      
+      "######################################################\n\n")
+}

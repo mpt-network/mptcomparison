@@ -84,6 +84,7 @@ head(data)
 ## Settings                    ##
 #################################
 
+LOG_FILE <- TRUE      # if TRUE, all output messages are printed to a logfile, not to the console.
 AVAILABLE_CORES <- 4  # Set the number of CPU cores that are available on your computer.
 # most modern computers have at least 4. It is not recommended to set higher numbers than available.
 
@@ -112,6 +113,7 @@ MAX_CI_INDIV <- 0.99
 ## Analysis (do not change) ##
 ##############################
 
+if(LOG_FILE) sink(paste0("warnings_", DATA_FILE, ".log"))
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
 
@@ -119,6 +121,7 @@ res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta", "trait_uncorr
                        mpt_treebugs_safe, 
                        dataset = DATA_FILE, data = data, model = EQN_FILE,
                        col_id = COL_ID, col_condition = COL_CONDITION)
+if(LOG_FILE) sink()
 
 results <- bind_rows(res_mptinr, res_treebugs)
 
