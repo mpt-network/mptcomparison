@@ -25,6 +25,7 @@ runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 source("../scripts/mptinr.R")
 source("../scripts/treebugs.R")
 source("../scripts/auxiliary_functions.R")
+source("../scripts/check_functions.R")
 source("../scripts/summary_plots.R")
 
 
@@ -63,6 +64,7 @@ data[,COL_CONDITION] <- factor(data[,COL_CONDITION],
 
 ### check input data frame
 head(data)
+check_input(data)
 
 
 #################################

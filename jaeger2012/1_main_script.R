@@ -25,6 +25,7 @@ runjags.options(silent.jags = TRUE, silent.runjags = TRUE)
 source("../scripts/mptinr.R")
 source("../scripts/treebugs.R")
 source("../scripts/auxiliary_functions.R")
+source("../scripts/check_functions.R")
 source("../scripts/summary_plots.R")
 
 
@@ -78,6 +79,7 @@ COL_CONDITION <- "exp"  # name of the variable encoding group membership
 
 ### check input data frame
 head(data)
+check_input(data)
 
 
 #################################
