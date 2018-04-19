@@ -5,7 +5,8 @@ mpt_mptinr <- function(dataset,  # name of data file
                        data, # data.frame
                        model, # name of EQN file
                        col_id = "id", 
-                       col_condition = "condition"){
+                       col_condition = "condition", 
+                       seed){
 
   prepared <- prep_data_fitting(data = data,
                             model_file = model,
@@ -17,7 +18,8 @@ mpt_mptinr <- function(dataset,  # name of data file
                   prepared = prepared,
                   model = model,
                   col_id = col_id,
-                  col_condition = col_condition),
+                  col_condition = col_condition, 
+                  seed = seed),
     mpt_mptinr_complete(dataset = dataset,
                   prepared = prepared,
                   model = model,
@@ -36,11 +38,13 @@ mpt_mptinr_no <- function(dataset,
                           prepared, 
                           model,
                           col_id, 
-                          col_condition) {
+                          col_condition, 
+                          seed) {
   cat_method("MPTinR - no pooling")
-  
+
   cl <- makeCluster(rep("localhost", MPTINR_OPTIONS["nCPU"])) # make cluster
   clusterEvalQ(cl, library("MPTinR"))
+  if (!missing(seed)) clusterSetRNGStream(cl = cl, seed)
   
   clusterExport(cl = cl, "MPTINR_OPTIONS", envir = environment())
 
@@ -90,7 +94,7 @@ mpt_mptinr_no <- function(dataset,
   no_pooling2$gof_indiv[[1]]$p <-
     fit_mptinr$goodness.of.fit$individual$p.value
   
-  fit_pb <- clusterApplyLB(cl, seq_len(nrow(prepared$data)),
+  fit_pb <- clusterApply(cl, seq_len(nrow(prepared$data)),
                            get_pb_output, 
                            fit_mptinr = fit_mptinr,
                            data = prepared$data,
