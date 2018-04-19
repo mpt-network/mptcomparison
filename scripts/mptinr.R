@@ -43,7 +43,7 @@ mpt_mptinr_no <- function(dataset,
   clusterEvalQ(cl, library("MPTinR"))
   
   clusterExport(cl = cl, "MPTINR_OPTIONS", envir = environment())
-  
+
   no_pooling <- make_results_row(model = model,
                                  dataset = dataset,
                                  pooling = "no",
@@ -278,11 +278,10 @@ mpt_mptinr_no <- function(dataset,
   
   ### test between ###
   
-  
   for (i in seq_len(nrow(no_pooling$test_between[[1]]))) {
     tmp_par <- no_pooling$test_between[[1]]$parameter[i]
-    tmp_c1 <- no_pooling$test_between[[1]]$condition1[i]
-    tmp_c2 <- no_pooling$test_between[[1]]$condition2[i]
+    tmp_c1 <- as.character(no_pooling$test_between[[1]]$condition1[i])
+    tmp_c2 <- as.character(no_pooling$test_between[[1]]$condition2[i])
     
     tmp_df <- droplevels(no_pooling$est_indiv[[1]][ 
       no_pooling$est_indiv[[1]]$parameter == tmp_par & 
@@ -296,18 +295,12 @@ mpt_mptinr_no <- function(dataset,
     
     tmp_se <- coef(summary(tmp_lm))[2,"Std. Error"]
     
-    no_pooling$test_between[[1]][ 
-      no_pooling$test_between[[1]]$parameter == tmp_par , 
-      c("est_diff" , "se", "p") ] <- 
+    no_pooling$test_between[[1]][ i , c("est_diff" , "se", "p") ] <- 
       c(diff(rev(tmp_t$estimate)), tmp_se, tmp_t$p.value)
     
-    no_pooling$test_between[[1]][ 
-      no_pooling$test_between[[1]]$parameter == tmp_par, prepared$cols_ci] <- 
-      no_pooling$test_between[[1]][ 
-        no_pooling$test_between[[1]]$parameter == tmp_par ,]$est_diff + 
-      qnorm(CI_SIZE)* no_pooling$test_between[[1]][ 
-        no_pooling$test_between[[1]]$parameter == tmp_par ,]$se
-    
+    no_pooling$test_between[[1]][ i, prepared$cols_ci] <- 
+      no_pooling$test_between[[1]][ i,]$est_diff + 
+      qnorm(CI_SIZE)* no_pooling$test_between[[1]][ i,]$se
   }
   
   ### copy information

@@ -54,14 +54,20 @@ make_results_row <- function(model, dataset, pooling, package, method,
   # group comparisons
   if (length(conditions) > 1) {
       pairs <- combn(conditions, 2)
-      test_between <- 
-        as_tibble(expand.grid(parameter = parameters, 
-                              condition1 = factor(pairs[1,], levels = conditions),
-                              condition2 = factor(pairs[2,], levels = conditions))) %>% 
-        mutate(est_diff = NA_real_, se = NA_real_, p = NA_real_)
-      tibble_ci <- as_tibble(matrix(NA_real_, nrow(test_between), length(CI_SIZE),
-                                    dimnames = list(NULL, paste0("ci_", CI_SIZE))))
-      test_between <- bind_cols(test_between, tibble_ci)
+      tmp_test_between <- vector("list", ncol(pairs))
+      for (i in seq_len(ncol(pairs))) {
+        tmp_test_between[[i]] <- as_tibble(
+          expand.grid(parameter = parameters, 
+                      condition1 = factor(pairs[1,i], levels = conditions),
+                      condition2 = factor(pairs[2,i], levels = conditions))) %>% 
+          mutate(est_diff = NA_real_, se = NA_real_, p = NA_real_)
+        tibble_ci <- as_tibble(
+          matrix(NA_real_, nrow(tmp_test_between[[i]]), 
+                 length(CI_SIZE),
+                 dimnames = list(NULL, paste0("ci_", CI_SIZE))))
+       tmp_test_between[[i]] <- bind_cols( tmp_test_between[[i]], tibble_ci)
+      }
+      test_between <- bind_rows(tmp_test_between) 
   } else {
     test_between <- tibble()
   }
