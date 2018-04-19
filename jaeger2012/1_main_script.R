@@ -28,6 +28,8 @@ source("../scripts/auxiliary_functions.R")
 source("../scripts/check_functions.R")
 source("../scripts/summary_plots.R")
 
+options(warn=1)  # print warnings (important for log file)
+
 
 #################################
 ## MPT model definition & Data ##
@@ -115,15 +117,23 @@ MAX_CI_INDIV <- 0.99
 ## Analysis (do not change) ##
 ##############################
 
-if(LOG_FILE) sink(paste0("warnings_", DATA_FILE, ".log"))
+if(LOG_FILE){
+  logfile <- file(paste0("warnings_", DATA_FILE, ".log"), open = "wt")
+  sink(logfile)
+  sink(logfile, type = "message")
+}
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
 
 res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta", "trait_uncorrelated"),
-                       mpt_treebugs_safe, 
-                       dataset = DATA_FILE, data = data, model = EQN_FILE,
-                       col_id = COL_ID, col_condition = COL_CONDITION)
-if(LOG_FILE) sink()
+                    mpt_treebugs_safe, 
+                    dataset = DATA_FILE, data = data, model = EQN_FILE,
+                    col_id = COL_ID, col_condition = COL_CONDITION)
+if(LOG_FILE){ 
+  sink(type = "message")
+  sink()
+  close(logfile)
+}
 
 results <- bind_rows(res_mptinr, res_treebugs)
 

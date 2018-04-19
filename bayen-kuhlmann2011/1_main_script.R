@@ -28,6 +28,8 @@ source("../scripts/auxiliary_functions.R")
 source("../scripts/check_functions.R")
 source("../scripts/summary_plots.R")
 
+options(warn=1)  # print warnings (important for log file)
+
 
 #################################
 ## MPT model definition & Data ##
@@ -89,18 +91,22 @@ CI_SIZE <- c(0.025, 0.1, 0.9, 0.975)
 MAX_CI_INDIV <- 0.99
 
 ### different settings for testing (faster, but inaccurate results!)
-# MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
-# TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 1000, n.adapt = 500,
-#                    n.burnin = 100, n.thin = 2,
-#                    Rhat_max = 10, Neff_min = 3, extend_max = 2,
-#                    n.PPP = 10, nCPU = 8)
+MPTINR_OPTIONS <- c(bootstrap_samples = 10, n.optim = 2, nCPU = 8)
+TREEBUGS_MCMC <- c(n.chain = 4, n.iter = 1000, n.adapt = 500,
+                   n.burnin = 100, n.thin = 2,
+                   Rhat_max = 10, Neff_min = 3, extend_max = 2,
+                   n.PPP = 10, nCPU = 8)
 
 
 ##############################
 ## Analysis (do not change) ##
 ##############################
 
-if(LOG_FILE) sink(paste0("warnings_", DATA_FILE, ".log"))
+if(LOG_FILE){
+  logfile <- file(paste0("warnings_", DATA_FILE, ".log"), open = "wt")
+  sink(logfile)
+  sink(logfile, type = "message")
+}
 res_mptinr <- mpt_mptinr(dataset = DATA_FILE, data = data, model = EQN_FILE,
                          col_id = COL_ID, col_condition = COL_CONDITION)
 
@@ -108,7 +114,11 @@ res_treebugs <- map(c("simple", "simple_pooling", "trait", "beta", "trait_uncorr
                     mpt_treebugs_safe, 
                     dataset = DATA_FILE, data = data, model = EQN_FILE,
                     col_id = COL_ID, col_condition = COL_CONDITION)
-if(LOG_FILE) sink()
+if(LOG_FILE){ 
+  sink(type = "message")
+  sink()
+  close(logfile)
+}
 
 results <- bind_rows(res_mptinr, res_treebugs)
 
