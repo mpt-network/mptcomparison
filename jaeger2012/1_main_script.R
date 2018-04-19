@@ -28,6 +28,7 @@ source("../scripts/auxiliary_functions.R")
 source("../scripts/check_functions.R")
 source("../scripts/summary_plots.R")
 
+set.seed(12345)  # reproducible results
 options(warn=1)  # print warnings (important for log file)
 
 
