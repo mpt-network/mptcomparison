@@ -1,0 +1,76 @@
+
+
+ ######################################################
+ ##############  MPTinR - no pooling 
+ ######################################################
+
+Warning: MPTinR-no: IDs and parameters with PB-CIs > 0.99 (i.e., non-identified):
+12:Jaeger_2012: gn2
+14:Jaeger_2012: go2
+15:Jaeger_2012: gn1, go1
+19:Jaeger_2012: Do, gn2
+2:Jaeger_2012: gn2
+22:Jaeger_2012: go2
+25:Jaeger_2012: go2
+26:Jaeger_2012: go2
+28:Jaeger_2012: go1
+30:Jaeger_2012: go2
+33:Jaeger_2012: go2
+35:Jaeger_2012: Dn, go2
+41:Jaeger_2012: go2
+49:Jaeger_2012: go2
+54:Jaeger_2012: go1
+55:Jaeger_2012: gn2
+56:Jaeger_2012: go2
+6:Jaeger_2012: go1
+7:Jaeger_2012: go2
+9:Jaeger_2012: gn2, go2
+
+
+
+ ######################################################
+ ##############  MPTinR - complete pooling 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - simple 
+ ######################################################
+
+Warning: Column `id` joining factors with different levels, coercing to character vector
+
+
+ ######################################################
+ ##############  TreeBUGS - simple_pooling 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - trait 
+ ######################################################
+
+MCMC sampling started at  2018-04-19 19:51:41 
+Warning: The adaptation phase of one or more models was not completed in 3000 iterations, so the current samples may not be optimal - try increasing the number of iterations to the "adapt" argument
+MCMC sampling finished at 2018-04-19 20:02:11 
+  Time difference of 10.49564 mins
+Drawing additional samples for method =  trait . max(Rhat) =  1.12  ; min(n.eff) =  162 
+Warning: Column `id` joining factors with different levels, coercing to character vector
+
+
+ ######################################################
+ ##############  TreeBUGS - beta 
+ ######################################################
+
+MCMC sampling started at  2018-04-19 20:14:22 
+
+
+ ######################################################
+ ##############  TreeBUGS - trait_uncorrelated 
+ ######################################################
+
+MCMC sampling started at  2018-04-19 20:16:58 
+MCMC sampling finished at 2018-04-19 20:27:55 
+  Time difference of 10.95294 mins
+Warning: Column `id` joining factors with different levels, coercing to character vector

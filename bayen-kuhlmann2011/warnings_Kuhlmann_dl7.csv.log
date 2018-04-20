@@ -1,0 +1,97 @@
+
+
+ ######################################################
+ ##############  MPTinR - no pooling 
+ ######################################################
+
+Warning in fit.mptinr(data = data, objective = llk.model, param.names = param.names,  :
+  Error code(s) in final results: 0 1. The following dataset(s) did not converge succesfully in the best fitting optimization run:
+37
+Warning: MPTinR-no: IDs and parameters with PB-CIs > 0.99 (i.e., non-identified):
+103: d
+105: g
+108: d
+111: d
+112: d
+115: d
+117: g
+119: d
+120: d
+123: d
+124: d
+128: d
+135: d
+136: d
+139: d
+143: d
+146: g
+147: d
+148: d
+
+Warning: Column `condition` joining factors with different levels, coercing to character vector
+
+
+ ######################################################
+ ##############  MPTinR - complete pooling 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - simple 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - simple_pooling 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - trait 
+ ######################################################
+
+MCMC sampling started at  2018-04-19 17:29:31 
+MCMC sampling finished at 2018-04-19 17:30:58 
+  Time difference of 1.437401 mins
+MCMC sampling started at  2018-04-19 17:31:21 
+Warning: The adaptation phase of one or more models was not completed in 3000 iterations, so the current samples may not be optimal - try increasing the number of iterations to the "adapt" argument
+MCMC sampling finished at 2018-04-19 17:32:50 
+  Time difference of 1.492589 mins
+
+
+ ######################################################
+ ##############  TreeBUGS - beta 
+ ######################################################
+
+MCMC sampling started at  2018-04-19 17:33:16 
+MCMC sampling finished at 2018-04-19 17:34:35 
+  Time difference of 1.322418 mins
+MCMC sampling started at  2018-04-19 17:34:59 
+MCMC sampling finished at 2018-04-19 17:36:13 
+  Time difference of 1.230122 mins
+
+
+ ######################################################
+ ##############  TreeBUGS - trait_uncorrelated 
+ ######################################################
+
+MCMC sampling started at  2018-04-19 17:36:39 
+MCMC sampling finished at 2018-04-19 17:38:19 
+  Time difference of 1.666639 mins
+MCMC sampling started at  2018-04-19 17:38:41 
+MCMC sampling finished at 2018-04-19 17:40:25 
+  Time difference of 1.724741 mins
+Drawing additional samples for method =  trait . max(Rhat) =  1.24  ; min(n.eff) =  918 
+Drawing additional samples for method =  trait . max(Rhat) =  1.12  ; min(n.eff) =  1176 
+Drawing additional samples for method =  trait . max(Rhat) =  1.05  ; min(n.eff) =  2041 
+Warning in betweenSubjectMPT(treebugs_fit[[i]], treebugs_fit[[j]], par1 = p,  :
+  Different numbers of iterations for both models. Some iterations are dropped!
+Warning in betweenSubjectMPT(treebugs_fit[[i]], treebugs_fit[[j]], par1 = p,  :
+  Different numbers of iterations for both models. Some iterations are dropped!
+Warning in betweenSubjectMPT(treebugs_fit[[i]], treebugs_fit[[j]], par1 = p,  :
+  Different numbers of iterations for both models. Some iterations are dropped!
+Warning in betweenSubjectMPT(treebugs_fit[[i]], treebugs_fit[[j]], par1 = p,  :
+  Different numbers of iterations for both models. Some iterations are dropped!
