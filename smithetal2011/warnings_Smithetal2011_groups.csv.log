@@ -1,0 +1,69 @@
+
+
+ ######################################################
+ ##############  MPTinR - no pooling 
+ ######################################################
+
+Warning in fit.mptinr(data = data, objective = llk.model, param.names = param.names,  :
+  Error code(s) in final results: 0 1. The following dataset(s) did not converge succesfully in the best fitting optimization run:
+55
+Warning: MPTinR-no: IDs and parameters with PB-CIs > 0.99 (i.e., non-identified):
+  6: M
+ 20: P
+ 63: P
+ 64: P
+154: M
+185: M
+207: M
+
+Warning: Column `condition` joining factors with different levels, coercing to character vector
+
+
+ ######################################################
+ ##############  MPTinR - complete pooling 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - simple 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - simple_pooling 
+ ######################################################
+
+
+
+ ######################################################
+ ##############  TreeBUGS - trait 
+ ######################################################
+
+MCMC sampling started at  2018-04-24 10:56:11 
+MCMC sampling finished at 2018-04-24 10:57:22 
+  Time difference of 1.170072 mins
+MCMC sampling started at  2018-04-24 10:57:47 
+Warning: The adaptation phase of one or more models was not completed in 500 iterations, so the current samples may not be optimal - try increasing the number of iterations to the "adapt" argument
+MCMC sampling finished at 2018-04-24 10:59:01 
+  Time difference of 1.230879 mins
+
+
+ ######################################################
+ ##############  TreeBUGS - beta 
+ ######################################################
+
+MCMC sampling started at  2018-04-24 10:59:32 
+
+
+ ######################################################
+ ##############  TreeBUGS - trait_uncorrelated 
+ ######################################################
+
+MCMC sampling started at  2018-04-24 10:59:52 
+MCMC sampling finished at 2018-04-24 11:01:01 
+  Time difference of 1.149835 mins
+MCMC sampling started at  2018-04-24 11:01:25 
+MCMC sampling finished at 2018-04-24 11:02:37 
+  Time difference of 1.198522 mins

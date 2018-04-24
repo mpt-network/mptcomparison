@@ -1,0 +1,67 @@
+################ OPTIONS ################
+
+TreeBUGS:
+   n.chain     n.iter    n.adapt   n.burnin     n.thin   Rhat_max   Neff_min extend_max      n.PPP       nCPU 
+         4       1000        500        100          2         10          3          2         10          8 
+
+MPTinR:
+bootstrap_samples           n.optim              nCPU 
+               10                 2                 8 
+
+CI_SIZE:  0.025 0.1 0.9 0.975 
+MAX_CI_INDIV =  0.99 
+
+################ CHECK RESULTS ################
+
+## Following analyses approaches missing from results:
+ partial, TreeBUGS, beta 
+
+
+## MPTinR: no pooling
+Based on asymptotic CIs, proportion of participants with non-identified parameters:
+  condition proportion
+1 low_WM        0.0357
+2 high_WM       0.0256
+
+Based on asymptotic CIs, table of non-identified parameters:
+  condition parameter  Freq
+1 low_WM    M             1
+2 low_WM    P             3
+3 high_WM   M             3
+Based on PB/MLE CIs, proportion of participants with non-identified parameters:
+  condition proportion
+1 low_WM        0.0357
+2 high_WM       0.0256
+
+Based on PB/MLE CIs, table of non-identified parameters:
+  condition parameter  Freq
+1 low_WM    M             1
+2 low_WM    P             3
+3 high_WM   M             3
+
+
+## MPTinR: complete pooling
+No convergence problems.
+
+
+## TreeBUGS, no, simple:
+All Rhat < 10 .
+All effect sample sizes > 3 .
+
+
+## TreeBUGS, complete, simple:
+All Rhat < 10 .
+All effect sample sizes > 3 .
+
+
+## TreeBUGS, partial, trait:
+All Rhat < 10 .
+All effect sample sizes > 3 .
+
+
+## TreeBUGS, partial, trait_uncorrelated:
+All Rhat < 10 .
+All effect sample sizes > 3 .
+
+
+NULL
