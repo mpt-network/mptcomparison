@@ -1,0 +1,12 @@
+model,dataset,pooling,package,method,type,focus,stat_obs,stat_pred,stat_df,p
+PM.eqn,Smithetal2011_groups.csv,no,MPTinR,PB/MLE,pb-G2,mean,1046.0015118012154,NA,916,0.09090909090909091
+PM.eqn,Smithetal2011_groups.csv,no,MPTinR,asymptotic,G2,mean,1046.0015118012154,NA,916,0.001751087247077627
+PM.eqn,Smithetal2011_groups.csv,complete,MPTinR,asymptotic,G2,mean,73.95316288814502,NA,4,3.3173445972618184e-15
+PM.eqn,Smithetal2011_groups.csv,no,TreeBUGS,simple,T1_G2,mean,3.669090163292945,0.13551555617079888,NA,0
+PM.eqn,Smithetal2011_groups.csv,no,TreeBUGS,simple,T2,cov,82.6554924950239,15.461664520102397,NA,0
+PM.eqn,Smithetal2011_groups.csv,complete,TreeBUGS,simple,T1_G2,mean,116.35403860235377,16.46730384956102,NA,0
+PM.eqn,Smithetal2011_groups.csv,complete,TreeBUGS,simple,T2,cov,NA,NA,NA,NA
+PM.eqn,Smithetal2011_groups.csv,partial,TreeBUGS,trait,T1_G2,mean,1.159330735291277,0.11257888251267183,NA,0
+PM.eqn,Smithetal2011_groups.csv,partial,TreeBUGS,trait,T2,cov,31.38237167646336,9.97468850212177,NA,0
+PM.eqn,Smithetal2011_groups.csv,partial,TreeBUGS,trait_uncorrelated,T1_G2,mean,1.057375846049864,0.11214196029554316,NA,0
+PM.eqn,Smithetal2011_groups.csv,partial,TreeBUGS,trait_uncorrelated,T2,cov,35.10634014996636,9.764323373659561,NA,0
